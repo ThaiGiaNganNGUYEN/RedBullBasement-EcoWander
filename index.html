@@ -1,0 +1,1974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoWander — Adventure Without Guilt</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,700;0,900;1,300;1,700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+/* ── TOKENS ─────────────────────────────────── */
+:root {
+  --leaf: #2D6A4F;
+  --leaf-light: #52B788;
+  --leaf-pale: #D8F3DC;
+  --earth: #5C4033;
+  --earth-light: #A0736A;
+  --sand: #F5ECD7;
+  --sand-dark: #E8D5B0;
+  --white: #FDFCFA;
+  --ink: #1A1A18;
+  --ink-mid: #3A3A36;
+  --ink-light: #6A6A64;
+  --gold: #C9A84C;
+  --gold-light: #F2D27A;
+  --eco-green: #40916C;
+  --eco-amber: #E08C1A;
+  --r: 14px;
+  --r-sm: 8px;
+  --r-lg: 24px;
+  --r-xl: 32px;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--white);
+  color:var(--ink);
+  overflow-x:hidden;
+}
+
+::-webkit-scrollbar{width:5px;}
+::-webkit-scrollbar-track{background:var(--sand);}
+::-webkit-scrollbar-thumb{background:var(--leaf);border-radius:3px;}
+
+/* ── NAV ─────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;
+  padding:0 2.5rem;
+  height:62px;
+  background:rgba(253,252,250,0.94);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(45,106,79,0.1);
+}
+
+.nav-left{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+
+.nav-logo{
+  font-family:'Fraunces',serif;
+  font-size:1.35rem;font-weight:700;
+  color:var(--leaf);
+  display:flex;align-items:center;gap:7px;
+  letter-spacing:-0.3px;text-decoration:none;
+}
+
+.logo-leaf{
+  width:22px;height:22px;
+  background:var(--leaf);
+  border-radius:50% 50% 50% 0;
+  transform:rotate(-45deg);flex-shrink:0;
+}
+
+.nav-ai-btn{
+  display:flex;align-items:center;gap:5px;
+  background:var(--leaf-pale);
+  color:var(--leaf);
+  border:1.5px solid rgba(45,106,79,0.2);
+  border-radius:100px;
+  padding:5px 13px;
+  font-size:0.75rem;font-weight:500;
+  font-family:'DM Sans',sans-serif;cursor:pointer;
+  transition:all .2s;white-space:nowrap;
+}
+.nav-ai-btn:hover{background:var(--leaf);color:#fff;}
+
+.nav-center{
+  display:flex;align-items:center;gap:2rem;
+  list-style:none;flex:1;justify-content:center;
+}
+.nav-center a{
+  font-size:0.84rem;color:var(--ink-light);
+  text-decoration:none;transition:color .2s;white-space:nowrap;
+}
+.nav-center a:hover{color:var(--leaf);}
+
+.nav-right{display:flex;align-items:center;gap:6px;flex-shrink:0;}
+
+/* Region btn */
+.nav-region-btn{
+  display:flex;align-items:center;gap:5px;
+  background:transparent;
+  border:1.5px solid rgba(26,26,24,0.14);
+  border-radius:100px;
+  padding:5px 11px;
+  font-size:0.75rem;color:var(--ink-light);
+  cursor:pointer;font-family:'DM Sans',sans-serif;
+  transition:all .2s;white-space:nowrap;
+}
+.nav-region-btn:hover{border-color:var(--leaf);color:var(--leaf);}
+.nav-region-btn svg{width:13px;height:13px;flex-shrink:0;}
+
+/* Points */
+.nav-points{
+  display:flex;align-items:center;gap:5px;
+  background:var(--sand);border-radius:100px;
+  padding:5px 11px;font-size:0.75rem;font-weight:500;
+  color:var(--earth);cursor:pointer;transition:background .2s;
+  white-space:nowrap;
+}
+.nav-points:hover{background:var(--sand-dark);}
+.pts-gem{
+  width:15px;height:15px;background:var(--gold);
+  border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:8px;color:#fff;font-weight:700;
+}
+
+/* Auth */
+.nav-login-btn{
+  background:transparent;border:1.5px solid rgba(26,26,24,0.16);
+  border-radius:100px;padding:5px 14px;
+  font-size:0.78rem;color:var(--ink);cursor:pointer;
+  font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap;
+}
+.nav-login-btn:hover{border-color:var(--leaf);color:var(--leaf);}
+
+.nav-signup-btn{
+  background:var(--leaf);border:none;
+  border-radius:100px;padding:6px 16px;
+  font-size:0.78rem;font-weight:500;color:#fff;cursor:pointer;
+  font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap;
+}
+.nav-signup-btn:hover{background:var(--eco-green);}
+
+.nav-avatar{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--leaf);color:#fff;
+  display:none;align-items:center;justify-content:center;
+  font-size:0.75rem;font-weight:600;cursor:pointer;
+  border:none;font-family:'DM Sans',sans-serif;flex-shrink:0;
+  transition:all .2s;
+}
+.nav-avatar:hover{background:var(--eco-green);}
+
+/* ── DROPDOWN SYSTEM ─────────────────────────── */
+.dropdown-overlay{
+  display:none;position:fixed;inset:0;z-index:300;
+}
+.dropdown-overlay.open{display:block;}
+
+.dropdown-panel{
+  position:fixed;z-index:301;
+  background:var(--white);
+  border:1px solid rgba(45,106,79,0.12);
+  border-radius:var(--r-lg);
+  box-shadow:0 16px 48px rgba(26,26,24,0.13);
+  min-width:260px;
+  animation:dropIn .18s ease both;
+}
+@keyframes dropIn{
+  from{opacity:0;transform:translateY(-8px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+.dp-header{
+  padding:.9rem 1.1rem .65rem;
+  border-bottom:1px solid rgba(45,106,79,0.08);
+  font-size:.66rem;font-weight:600;
+  color:var(--ink-light);text-transform:uppercase;letter-spacing:.08em;
+}
+.dp-section{padding:.6rem .75rem;}
+.dp-section-title{
+  font-size:.63rem;font-weight:600;color:var(--ink-light);
+  text-transform:uppercase;letter-spacing:.06em;
+  margin-bottom:4px;padding:0 6px;
+}
+.dp-option{
+  display:flex;align-items:center;gap:9px;
+  padding:7px 10px;border-radius:10px;
+  cursor:pointer;transition:background .15s;
+  font-size:.82rem;color:var(--ink);
+}
+.dp-option:hover{background:var(--leaf-pale);}
+.dp-option.sel{background:var(--leaf-pale);color:var(--leaf);font-weight:500;}
+.dp-flag{font-size:.95rem;width:18px;text-align:center;}
+.dp-divider{height:1px;background:rgba(45,106,79,0.07);margin:2px .85rem;}
+
+/* Account panel */
+.acct-panel{min-width:230px;}
+.acct-user-row{
+  display:flex;align-items:center;gap:10px;
+  padding:1.1rem;border-bottom:1px solid rgba(45,106,79,0.08);
+}
+.acct-avatar{
+  width:40px;height:40px;border-radius:50%;
+  background:var(--leaf);color:#fff;font-weight:600;font-size:.9rem;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.acct-name{font-weight:500;font-size:.87rem;color:var(--ink);}
+.acct-email{font-size:.68rem;color:var(--ink-light);margin-top:1px;}
+.acct-tier{
+  display:inline-flex;align-items:center;gap:3px;
+  background:var(--leaf-pale);color:var(--leaf);
+  border-radius:100px;padding:1px 7px;
+  font-size:.65rem;font-weight:500;margin-top:3px;
+}
+.acct-pts-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:8px 1.1rem;background:var(--sand);
+  border-bottom:1px solid rgba(45,106,79,0.08);
+}
+.acct-pts-label{font-size:.68rem;color:var(--ink-light);}
+.acct-pts-val{font-family:'Fraunces',serif;font-size:.95rem;font-weight:700;color:var(--leaf);}
+
+.acct-item{
+  display:flex;align-items:center;gap:9px;
+  padding:9px 1.1rem;font-size:.82rem;color:var(--ink);
+  cursor:pointer;transition:background .15s;
+}
+.acct-item:hover{background:var(--leaf-pale);color:var(--leaf);}
+.acct-item.danger{color:#C1121F;}
+.acct-item.danger:hover{background:#FEE2E2;}
+.acct-icon{font-size:.85rem;width:16px;text-align:center;}
+
+/* Settings panel */
+.settings-panel{min-width:260px;}
+.settings-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 1.1rem;border-bottom:1px solid rgba(45,106,79,0.07);
+}
+.settings-label{font-size:.82rem;color:var(--ink);}
+.settings-sub{font-size:.67rem;color:var(--ink-light);margin-top:1px;}
+.toggle{
+  width:36px;height:20px;background:#ccc;border-radius:100px;
+  position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;
+}
+.toggle.on{background:var(--leaf);}
+.toggle::after{
+  content:'';position:absolute;top:3px;left:3px;
+  width:14px;height:14px;border-radius:50%;background:#fff;
+  transition:transform .2s;
+}
+.toggle.on::after{transform:translateX(16px);}
+
+/* ── AUTH MODAL ──────────────────────────────── */
+.modal-backdrop{
+  display:none;position:fixed;inset:0;z-index:400;
+  background:rgba(26,26,24,.48);
+  backdrop-filter:blur(5px);
+  align-items:center;justify-content:center;
+}
+.modal-backdrop.open{display:flex;}
+.modal-box{
+  background:var(--white);border-radius:var(--r-xl);
+  width:100%;max-width:400px;padding:2.2rem 1.8rem;
+  position:relative;animation:modalIn .25s ease both;margin:1rem;
+}
+@keyframes modalIn{
+  from{opacity:0;transform:scale(.94) translateY(10px);}
+  to{opacity:1;transform:scale(1) translateY(0);}
+}
+.modal-close{
+  position:absolute;top:.9rem;right:.9rem;
+  width:30px;height:30px;border-radius:50%;
+  background:var(--sand);border:none;cursor:pointer;
+  font-size:.9rem;display:flex;align-items:center;justify-content:center;
+  color:var(--ink-light);transition:background .2s;
+}
+.modal-close:hover{background:var(--sand-dark);}
+.modal-title{
+  font-family:'Fraunces',serif;
+  font-size:1.7rem;font-weight:900;color:var(--ink);
+  margin-bottom:.2rem;letter-spacing:-.02em;
+}
+.modal-sub{font-size:.82rem;color:var(--ink-light);margin-bottom:1.5rem;line-height:1.5;}
+.modal-tab-row{
+  display:flex;background:var(--sand);border-radius:100px;padding:3px;
+  margin-bottom:1.4rem;
+}
+.modal-tab{
+  flex:1;padding:6px;border-radius:100px;border:none;
+  font-size:.79rem;cursor:pointer;font-family:'DM Sans',sans-serif;
+  background:transparent;color:var(--ink-light);transition:all .2s;
+}
+.modal-tab.active{background:#fff;color:var(--leaf);font-weight:500;}
+.modal-field{margin-bottom:.9rem;}
+.modal-label{font-size:.73rem;color:var(--ink-light);display:block;margin-bottom:4px;}
+.modal-input{
+  width:100%;border:1.5px solid rgba(26,26,24,.14);border-radius:10px;
+  padding:9px 12px;font-size:.87rem;color:var(--ink);
+  font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;background:#fff;
+}
+.modal-input:focus{border-color:var(--leaf);}
+.modal-name-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.modal-submit{
+  width:100%;background:var(--leaf);color:#fff;border:none;
+  border-radius:100px;padding:.8rem;font-size:.9rem;font-weight:500;
+  font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:.3rem;
+  transition:all .2s;
+}
+.modal-submit:hover{background:var(--eco-green);transform:translateY(-1px);}
+.modal-divider{
+  display:flex;align-items:center;gap:10px;
+  margin:1.1rem 0;font-size:.71rem;color:var(--ink-light);
+}
+.modal-divider::before,.modal-divider::after{content:'';flex:1;height:1px;background:rgba(26,26,24,.1);}
+.modal-oauth{display:flex;gap:7px;}
+.modal-oauth-btn{
+  flex:1;display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:8px;border:1.5px solid rgba(26,26,24,.12);border-radius:10px;
+  background:#fff;font-size:.77rem;color:var(--ink);cursor:pointer;
+  font-family:'DM Sans',sans-serif;transition:all .2s;
+}
+.modal-oauth-btn:hover{border-color:var(--leaf);}
+.modal-switch{text-align:center;margin-top:.9rem;font-size:.74rem;color:var(--ink-light);}
+.modal-switch a{color:var(--leaf);text-decoration:none;font-weight:500;cursor:pointer;}
+
+/* ── HERO ─────────────────────────────────────── */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:7rem 2rem 3rem;
+  text-align:center;
+  position:relative;
+  background:var(--white);
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 25%,rgba(82,183,136,.07) 0%,transparent 70%),
+    radial-gradient(ellipse 40% 35% at 15% 80%,rgba(45,106,79,.05) 0%,transparent 60%),
+    radial-gradient(ellipse 35% 30% at 85% 75%,rgba(82,183,136,.04) 0%,transparent 60%);
+}
+
+.hero-kicker{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--leaf-pale);border-radius:100px;
+  padding:5px 13px;margin-bottom:1.4rem;
+  font-size:.7rem;font-weight:500;color:var(--leaf);
+  text-transform:uppercase;letter-spacing:.08em;
+}
+.kicker-dot{
+  width:5px;height:5px;background:var(--leaf);
+  border-radius:50%;animation:pulse 2s infinite;
+}
+@keyframes pulse{
+  0%,100%{transform:scale(1);opacity:1;}
+  50%{transform:scale(1.5);opacity:.5;}
+}
+
+.hero h1{
+  font-family:'Fraunces',serif;
+  font-size:clamp(3.8rem,7.5vw,7rem);
+  font-weight:900;line-height:.98;
+  letter-spacing:-.035em;color:var(--ink);
+  margin-bottom:1.2rem;
+}
+.hero h1 em{font-style:italic;color:var(--leaf);font-weight:300;}
+
+.hero-sub{
+  font-size:1.05rem;color:var(--ink-light);
+  max-width:460px;line-height:1.65;margin:0 auto 2.4rem;
+}
+
+/* ── SEARCH WIDGET ────────────────────────────── */
+.search-widget{max-width:820px;width:100%;margin-bottom:2.5rem;}
+
+.search-tab-row{
+  display:flex;gap:4px;justify-content:center;
+  margin-bottom:12px;
+}
+.s-tab{
+  display:flex;align-items:center;gap:5px;
+  padding:7px 16px;border-radius:100px;
+  font-size:.79rem;color:var(--ink-light);
+  cursor:pointer;border:1.5px solid transparent;
+  background:rgba(255,255,255,.7);
+  font-family:'DM Sans',sans-serif;
+  transition:all .2s;white-space:nowrap;
+}
+.s-tab:hover{background:#fff;border-color:rgba(45,106,79,.15);}
+.s-tab.active{
+  background:#fff;color:var(--leaf);font-weight:500;
+  border-color:rgba(45,106,79,.25);
+  box-shadow:0 2px 10px rgba(45,106,79,.1);
+}
+
+/* trip type row */
+.trip-type-row{
+  display:flex;align-items:center;gap:8px;
+  margin-bottom:10px;
+}
+.tt-btn{
+  display:flex;align-items:center;gap:5px;
+  padding:5px 14px;border-radius:100px;
+  font-size:.75rem;cursor:pointer;
+  border:1.5px solid rgba(45,106,79,.2);
+  background:#fff;color:var(--ink-light);
+  font-family:'DM Sans',sans-serif;transition:all .2s;
+}
+.tt-btn.on{
+  background:var(--leaf-pale);
+  border-color:rgba(45,106,79,.3);
+  color:var(--leaf);font-weight:500;
+}
+
+/* search card */
+.search-card{
+  background:#fff;
+  border:1.5px solid rgba(45,106,79,.16);
+  border-radius:18px;
+  box-shadow:0 8px 40px rgba(45,106,79,.11);
+  display:flex;align-items:stretch;
+  padding:6px;gap:0;
+  transition:box-shadow .2s;
+}
+.search-card:focus-within{
+  box-shadow:0 12px 50px rgba(45,106,79,.19);
+  border-color:rgba(82,183,136,.4);
+}
+
+.s-field{
+  flex:1;padding:8px 14px;
+  border-right:1.5px solid rgba(45,106,79,.08);
+  display:flex;flex-direction:column;justify-content:center;
+  min-width:0;
+}
+.s-field:last-of-type{border-right:none;}
+.s-field-label{
+  font-size:.6rem;font-weight:600;
+  color:var(--ink);text-transform:uppercase;
+  letter-spacing:.06em;margin-bottom:3px;
+  white-space:nowrap;
+}
+.s-field input,.s-field select{
+  border:none;outline:none;
+  font-size:.85rem;color:var(--ink-light);
+  background:transparent;font-family:'DM Sans',sans-serif;
+  width:100%;padding:0;cursor:pointer;
+}
+.s-field input::placeholder{color:rgba(74,74,69,.42);}
+.s-field input[type="date"]{color:var(--ink-light);}
+
+.s-search-btn{
+  background:var(--leaf);color:#fff;
+  border:none;border-radius:13px;
+  padding:0 26px;font-size:.87rem;font-weight:500;
+  font-family:'DM Sans',sans-serif;cursor:pointer;
+  display:flex;align-items:center;gap:6px;
+  flex-shrink:0;transition:all .2s;white-space:nowrap;
+}
+.s-search-btn:hover{background:var(--eco-green);transform:scale(1.02);}
+.s-search-btn svg{width:15px;height:15px;}
+
+/* hero stats */
+.hero-stats{display:flex;gap:3rem;justify-content:center;flex-wrap:wrap;margin-top:.5rem;}
+.h-stat-val{
+  font-family:'Fraunces',serif;font-size:1.7rem;font-weight:700;
+  color:var(--leaf);line-height:1;
+}
+.h-stat-label{font-size:.73rem;color:var(--ink-light);margin-top:3px;}
+
+/* Destination chips */
+.hero-chips{
+  display:flex;gap:10px;justify-content:center;
+  flex-wrap:nowrap;overflow-x:auto;
+  max-width:1000px;width:100%;
+  padding:.5rem 0 .25rem;margin-top:2.2rem;
+  scrollbar-width:none;
+}
+.hero-chips::-webkit-scrollbar{display:none;}
+.dest-chip{
+  background:#fff;border:1.5px solid var(--sand-dark);
+  border-radius:var(--r);padding:0;overflow:hidden;
+  flex-shrink:0;width:150px;cursor:pointer;
+  transition:all .25s;
+}
+.dest-chip:hover{
+  transform:translateY(-4px);
+  border-color:rgba(82,183,136,.4);
+  box-shadow:0 8px 24px rgba(45,106,79,.13);
+}
+.chip-img{height:82px;position:relative;}
+.chip-img-bg{position:absolute;inset:0;}
+.chip-info{padding:7px 9px;}
+.chip-name{font-weight:500;font-size:.74rem;color:var(--ink);margin-bottom:2px;}
+.chip-eco{font-size:.62rem;color:var(--eco-green);font-weight:500;}
+
+/* ── COMMON SECTION STYLES ──────────────────── */
+.section-wrap{padding:5.5rem 2.5rem;max-width:1200px;margin:0 auto;}
+.s-kicker{
+  font-size:.7rem;font-weight:600;color:var(--leaf);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:.85rem;
+}
+.s-title{
+  font-family:'Fraunces',serif;
+  font-size:clamp(1.9rem,3.2vw,2.8rem);
+  font-weight:900;line-height:1.1;letter-spacing:-.02em;
+  color:var(--ink);max-width:560px;margin-bottom:.85rem;
+}
+.s-title em{font-style:italic;color:var(--leaf);font-weight:300;}
+.s-sub{font-size:.95rem;color:var(--ink-light);max-width:500px;line-height:1.7;margin-bottom:2.5rem;}
+
+.btn-primary{
+  background:var(--leaf);color:#fff;border:none;cursor:pointer;
+  padding:.85rem 1.9rem;border-radius:100px;
+  font-size:.92rem;font-weight:500;font-family:'DM Sans',sans-serif;
+  display:inline-flex;align-items:center;gap:7px;transition:all .25s;
+}
+.btn-primary:hover{background:var(--eco-green);transform:translateY(-2px);box-shadow:0 8px 24px rgba(45,106,79,.22);}
+.btn-secondary{
+  background:transparent;color:var(--ink);
+  border:1.5px solid rgba(26,26,24,.18);
+  cursor:pointer;padding:.85rem 1.9rem;border-radius:100px;
+  font-size:.92rem;font-family:'DM Sans',sans-serif;transition:all .25s;
+}
+.btn-secondary:hover{border-color:var(--leaf);color:var(--leaf);}
+
+/* ── AI PLANNER ──────────────────────────────── */
+.planner-section{
+  padding:5.5rem 2.5rem;
+  background:var(--ink);position:relative;overflow:hidden;
+}
+.planner-section::before{
+  content:'';position:absolute;top:-80px;right:-80px;
+  width:500px;height:500px;pointer-events:none;
+  background:radial-gradient(circle,rgba(45,106,79,.22) 0%,transparent 70%);
+}
+.planner-inner{
+  max-width:1200px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1.15fr;
+  gap:4.5rem;align-items:start;
+}
+.planner-section .s-title{color:#fff;}
+.planner-section .s-sub{color:rgba(255,255,255,.5);}
+.planner-section .s-kicker{color:var(--leaf-light);}
+
+.planner-steps-list{display:flex;flex-direction:column;gap:13px;margin-top:1.8rem;}
+.psl-item{display:flex;align-items:center;gap:11px;}
+.psl-num{
+  width:33px;height:33px;border-radius:50%;flex-shrink:0;
+  background:rgba(82,183,136,.12);border:1px solid rgba(82,183,136,.28);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.85rem;color:rgba(255,255,255,.7);
+}
+.psl-name{font-size:.82rem;font-weight:500;color:#fff;margin-bottom:1px;}
+.psl-desc{font-size:.71rem;color:rgba(255,255,255,.32);}
+
+/* form wrap */
+.planner-form{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:var(--r-xl);padding:1.8rem;
+}
+.step-bars{display:flex;gap:7px;margin-bottom:1.8rem;}
+.step-bar{
+  flex:1;height:3px;background:rgba(255,255,255,.1);
+  border-radius:2px;cursor:pointer;transition:background .3s;
+}
+.step-bar.active{background:var(--leaf-light);}
+.step-bar.done{background:rgba(82,183,136,.38);}
+
+.planner-step{display:none;}
+.planner-step.active{display:block;animation:fadeUp .35s ease both;}
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(14px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+.step-label{
+  font-size:.67rem;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--leaf-light);margin-bottom:5px;
+}
+.step-q{
+  font-family:'Fraunces',serif;font-size:1.35rem;font-weight:700;
+  color:#fff;margin-bottom:1.3rem;line-height:1.2;
+}
+
+/* vibe grid */
+.vibe-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:1.4rem;}
+.vibe-card{
+  background:rgba(255,255,255,.04);
+  border:1.5px solid rgba(255,255,255,.07);
+  border-radius:var(--r);padding:12px;
+  cursor:pointer;transition:all .2s;text-align:center;
+}
+.vibe-card:hover{border-color:rgba(82,183,136,.38);background:rgba(82,183,136,.07);}
+.vibe-card.sel{border-color:var(--leaf-light);background:rgba(82,183,136,.11);}
+.v-icon{font-size:1.7rem;margin-bottom:5px;}
+.v-name{font-size:.77rem;font-weight:500;color:#fff;margin-bottom:2px;}
+.v-desc{font-size:.65rem;color:rgba(255,255,255,.38);}
+
+/* trip type */
+.trip-type-row-dark{display:flex;gap:8px;margin-bottom:1.1rem;}
+.tt-dark-btn{
+  display:flex;align-items:center;gap:5px;
+  padding:6px 14px;border-radius:100px;
+  font-size:.76rem;cursor:pointer;
+  border:1.5px solid rgba(255,255,255,.14);
+  background:transparent;color:rgba(255,255,255,.48);
+  font-family:'DM Sans',sans-serif;transition:all .2s;
+}
+.tt-dark-btn:hover{border-color:rgba(82,183,136,.38);color:rgba(255,255,255,.8);}
+.tt-dark-btn.on{background:rgba(82,183,136,.13);border-color:var(--leaf-light);color:var(--leaf-light);font-weight:500;}
+
+/* form fields */
+.f-field{margin-bottom:.85rem;}
+.f-label{font-size:.73rem;color:rgba(255,255,255,.5);margin-bottom:5px;display:block;}
+.f-input{
+  width:100%;background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);border-radius:var(--r-sm);
+  padding:9px 12px;font-size:.87rem;color:#fff;
+  font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;
+}
+.f-input:focus{border-color:var(--leaf-light);}
+.f-input option{background:#1a1a18;}
+.f-input[type="date"]{color-scheme:dark;}
+.f-row2{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.f-swap-wrap{position:relative;}
+.f-swap-btn{
+  position:absolute;right:9px;top:50%;transform:translateY(-50%) translateY(8px);
+  background:rgba(82,183,136,.15);border:1px solid rgba(82,183,136,.28);
+  border-radius:50%;width:24px;height:24px;
+  cursor:pointer;color:var(--leaf-light);font-size:.72rem;
+  display:flex;align-items:center;justify-content:center;padding:0;
+}
+
+/* eco prefs */
+.eco-tags{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:1.3rem;}
+.eco-tag{
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
+  border-radius:100px;padding:5px 13px;font-size:.74rem;
+  color:rgba(255,255,255,.55);cursor:pointer;transition:all .2s;
+}
+.eco-tag:hover{border-color:var(--leaf-light);color:var(--leaf-light);}
+.eco-tag.on{background:rgba(82,183,136,.14);border-color:var(--leaf-light);color:var(--leaf-light);}
+
+.step-nav{display:flex;justify-content:space-between;align-items:center;margin-top:1.3rem;}
+.btn-next{
+  background:var(--leaf-light);color:var(--ink);border:none;cursor:pointer;
+  padding:.65rem 1.7rem;border-radius:100px;font-size:.84rem;font-weight:500;
+  font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:5px;transition:all .2s;
+}
+.btn-next:hover{background:#fff;transform:translateX(2px);}
+.btn-back{
+  background:transparent;border:1px solid rgba(255,255,255,.14);
+  color:rgba(255,255,255,.45);border-radius:100px;
+  padding:.65rem 1.3rem;font-size:.82rem;cursor:pointer;
+  font-family:'DM Sans',sans-serif;transition:all .2s;
+}
+.btn-back:hover{border-color:rgba(255,255,255,.3);color:#fff;}
+
+/* AI result */
+.ai-result{display:none;}
+.ai-result.show{display:block;animation:fadeUp .45s ease both;}
+.result-hdr{display:flex;align-items:center;gap:9px;margin-bottom:1.3rem;}
+.result-avatar{
+  width:34px;height:34px;background:var(--leaf);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;
+}
+.ai-typing{font-size:.79rem;color:rgba(255,255,255,.45);}
+.result-card{
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.11);
+  border-radius:var(--r);padding:1.1rem;margin-bottom:.85rem;
+}
+.result-card-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.9rem;}
+.result-trip-name{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;color:#fff;}
+.result-trip-sub{font-size:.71rem;color:rgba(255,255,255,.38);margin-top:2px;}
+.eco-pill{
+  background:rgba(64,145,108,.2);border:1px solid rgba(82,183,136,.28);
+  border-radius:100px;padding:3px 10px;
+  font-size:.71rem;font-weight:600;color:var(--leaf-light);white-space:nowrap;
+}
+.result-items{display:flex;flex-direction:column;gap:7px;}
+.r-item{display:flex;align-items:center;gap:9px;font-size:.79rem;color:rgba(255,255,255,.55);}
+.r-icon{
+  width:22px;height:22px;border-radius:6px;background:rgba(255,255,255,.08);
+  display:flex;align-items:center;justify-content:center;font-size:.72rem;flex-shrink:0;
+}
+.result-co2{
+  background:rgba(82,183,136,.09);border-radius:var(--r-sm);padding:10px;
+  display:flex;justify-content:space-between;align-items:center;margin-top:.9rem;
+}
+.co2-label{font-size:.71rem;color:rgba(255,255,255,.38);}
+.co2-val{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:700;color:var(--leaf-light);}
+.result-pts-row{
+  background:rgba(201,168,76,.11);border:1px solid rgba(201,168,76,.19);
+  border-radius:var(--r-sm);padding:9px 12px;
+  display:flex;align-items:center;justify-content:space-between;margin-top:7px;
+}
+.rpts-text{font-size:.74rem;color:rgba(255,255,255,.45);}
+.rpts-val{font-weight:600;color:var(--gold-light);font-size:.87rem;}
+.btn-book-trip{
+  width:100%;background:var(--leaf-light);color:var(--ink);border:none;cursor:pointer;
+  padding:.8rem;border-radius:100px;font-size:.87rem;font-weight:500;
+  font-family:'DM Sans',sans-serif;margin-top:1.1rem;transition:all .2s;
+}
+.btn-book-trip:hover{background:#fff;transform:translateY(-2px);}
+.btn-reset{
+  background:none;border:none;font-size:.71rem;
+  color:rgba(255,255,255,.28);cursor:pointer;
+  font-family:'DM Sans',sans-serif;display:block;margin:.7rem auto 0;
+}
+
+/* ── ECO RATING ──────────────────────────────── */
+.eco-explainer{display:grid;grid-template-columns:1.15fr 1fr;gap:4rem;align-items:center;}
+.eco-grades{display:flex;flex-direction:column;gap:.9rem;}
+.grade-card{
+  background:#fff;border:1.5px solid var(--sand-dark);
+  border-radius:var(--r);padding:1.1rem;
+  display:flex;align-items:center;gap:.9rem;
+  transition:all .28s;
+}
+.grade-card:hover{border-color:var(--leaf-light);box-shadow:0 8px 24px rgba(45,106,79,.09);transform:translateX(5px);}
+.grade-circle{
+  width:48px;height:48px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Fraunces',serif;font-size:1.15rem;font-weight:900;
+}
+.ga{background:#D8F3DC;color:#2D6A4F;}
+.gb{background:#EEF5D8;color:#5A6D2D;}
+.gc{background:#FFF3CD;color:#856404;}
+.gd{background:#FFE4C4;color:#9C4A00;}
+.grade-label{font-weight:500;font-size:.87rem;color:var(--ink);margin-bottom:1px;}
+.grade-desc{font-size:.71rem;color:var(--ink-light);line-height:1.4;}
+.grade-co2{margin-left:auto;text-align:right;flex-shrink:0;}
+.co2-big{font-family:'Fraunces',serif;font-size:.95rem;font-weight:700;color:var(--leaf);}
+.co2-sm{font-size:.62rem;color:var(--ink-light);}
+
+/* ── DESTINATIONS ─────────────────────────────── */
+.destinations-bg{background:var(--sand);padding:5.5rem 0;}
+.destinations-inner{max-width:1200px;margin:0 auto;padding:0 2.5rem;}
+.filter-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:2.2rem;}
+.filter-btn{
+  background:#fff;border:1.5px solid rgba(26,26,24,.1);
+  border-radius:100px;padding:7px 16px;font-size:.79rem;
+  cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;color:var(--ink-light);
+}
+.filter-btn:hover{border-color:var(--leaf);color:var(--leaf);}
+.filter-btn.active{background:var(--leaf);color:#fff;border-color:var(--leaf);}
+
+.dest-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.3rem;}
+.dest-card{
+  background:#fff;border-radius:var(--r-lg);overflow:hidden;
+  transition:all .28s;cursor:pointer;border:1.5px solid transparent;
+}
+.dest-card:hover{transform:translateY(-5px);box-shadow:0 18px 55px rgba(45,106,79,.13);border-color:rgba(82,183,136,.28);}
+.dest-img-wrap{height:190px;position:relative;overflow:hidden;display:flex;align-items:flex-end;}
+.dest-img-bg{position:absolute;inset:0;transition:transform .4s;}
+.dest-card:hover .dest-img-bg{transform:scale(1.06);}
+.dest-img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(26,26,24,.7) 0%,transparent 58%);}
+.dest-eco-dots{position:absolute;top:10px;right:10px;display:flex;gap:5px;}
+.eco-dot{width:7px;height:7px;border-radius:50%;background:var(--leaf-light);border:2px solid #fff;}
+.dest-img-label{position:relative;z-index:1;padding:.9rem;color:#fff;}
+.dest-name{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;line-height:1.15;}
+.dest-country{font-size:.68rem;opacity:.68;margin-top:2px;}
+.dest-body{padding:.9rem;}
+.dest-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;}
+.eco-bar-wrap{flex:1;margin-right:9px;}
+.eco-bar-label{font-size:.64rem;color:var(--ink-light);margin-bottom:2px;display:flex;justify-content:space-between;}
+.eco-bar-track{height:4px;background:var(--leaf-pale);border-radius:2px;overflow:hidden;}
+.eco-bar-fill{height:100%;background:linear-gradient(90deg,var(--leaf-light),var(--leaf));border-radius:2px;}
+.dest-price-block{text-align:right;}
+.dest-price-val{font-family:'Fraunces',serif;font-size:1.05rem;font-weight:700;color:var(--ink);}
+.dest-price-note{font-size:.62rem;color:var(--ink-light);}
+.dest-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:9px;}
+.d-tag{background:var(--sand);border-radius:100px;padding:2px 9px;font-size:.64rem;color:var(--earth-light);}
+.dest-footer{display:flex;justify-content:space-between;align-items:center;padding-top:9px;border-top:1px solid var(--sand);}
+.carbon-save{display:flex;align-items:center;gap:3px;font-size:.67rem;color:var(--eco-green);font-weight:500;}
+.btn-view{
+  background:var(--leaf);color:#fff;border:none;cursor:pointer;
+  padding:5px 14px;border-radius:100px;font-size:.72rem;font-weight:500;
+  font-family:'DM Sans',sans-serif;transition:all .2s;
+}
+.btn-view:hover{background:var(--eco-green);}
+
+/* ── BOOKING ──────────────────────────────────── */
+.booking-tabs-row{
+  display:flex;gap:5px;background:var(--sand);border-radius:100px;
+  padding:4px;width:fit-content;margin-bottom:2rem;
+}
+.b-tab{
+  padding:7px 18px;border-radius:100px;font-size:.82rem;
+  cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;
+  border:none;background:transparent;color:var(--ink-light);
+  display:flex;align-items:center;gap:5px;
+}
+.b-tab.active{background:#fff;color:var(--leaf);font-weight:500;box-shadow:0 2px 8px rgba(0,0,0,.07);}
+.b-panel{display:none;}
+.b-panel.active{display:flex;flex-direction:column;gap:10px;}
+
+.b-card{
+  background:#fff;border:1.5px solid var(--sand-dark);border-radius:var(--r);
+  padding:1.1rem;display:flex;align-items:center;gap:1.2rem;
+  transition:all .22s;cursor:pointer;
+}
+.b-card:hover{border-color:var(--leaf-light);box-shadow:0 7px 22px rgba(45,106,79,.09);}
+.b-card-icon{
+  width:44px;height:44px;border-radius:var(--r-sm);background:var(--leaf-pale);
+  display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;
+}
+.b-card-main{flex:1;}
+.b-card-name{font-weight:500;font-size:.9rem;color:var(--ink);margin-bottom:2px;}
+.b-card-detail{font-size:.74rem;color:var(--ink-light);}
+.b-card-eco{display:flex;align-items:center;gap:7px;margin-top:7px;}
+.mini-score{font-size:.64rem;font-weight:600;padding:1px 7px;border-radius:100px;}
+.score-a{background:#D8F3DC;color:#2D6A4F;}
+.score-b{background:#FFF3CD;color:#856404;}
+.mini-bar-track{height:3px;width:72px;background:var(--sand-dark);border-radius:2px;overflow:hidden;}
+.mini-bar-fill{height:100%;background:var(--leaf);border-radius:2px;}
+.b-card-right{text-align:right;flex-shrink:0;}
+.b-price{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;color:var(--ink);}
+.b-price-note{font-size:.64rem;color:var(--ink-light);}
+.b-carbon{font-size:.66rem;color:var(--eco-green);font-weight:500;margin-top:3px;}
+
+/* ── REWARDS ──────────────────────────────────── */
+.rewards-bg{background:var(--sand);padding:5.5rem 0;}
+.rewards-inner{max-width:1200px;margin:0 auto;padding:0 2.5rem;}
+.rewards-grid{display:grid;grid-template-columns:1fr 1.35fr;gap:3.5rem;align-items:start;}
+.tier-stack{display:flex;flex-direction:column;gap:9px;}
+.tier-card{
+  border-radius:var(--r);padding:1.1rem 1.3rem;
+  display:flex;align-items:center;gap:.9rem;
+  transition:transform .2s;cursor:default;
+}
+.tier-card:hover{transform:translateX(5px);}
+.t-seed{background:var(--leaf-pale);}
+.t-sprout{background:#D4EDDA;}
+.t-canopy{background:#1B4965;}
+.t-legend{background:var(--ink);}
+.tier-badge{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.badge-seed{background:rgba(45,106,79,.14);}
+.badge-sprout{background:rgba(64,145,108,.19);}
+.badge-canopy{background:rgba(82,183,136,.19);}
+.badge-legend{background:rgba(201,168,76,.19);}
+.tier-name{font-family:'Fraunces',serif;font-size:1rem;font-weight:700;line-height:1;}
+.t-seed .tier-name,.t-sprout .tier-name{color:var(--leaf);}
+.t-canopy .tier-name,.t-legend .tier-name{color:#fff;}
+.tier-pts{font-size:.68rem;margin-top:2px;}
+.t-seed .tier-pts,.t-sprout .tier-pts{color:var(--eco-green);}
+.t-canopy .tier-pts,.t-legend .tier-pts{color:rgba(255,255,255,.45);}
+.tier-perks{margin-left:auto;text-align:right;}
+.tier-perk{font-size:.66rem;margin-bottom:1px;}
+.t-seed .tier-perk,.t-sprout .tier-perk{color:var(--ink-light);}
+.t-canopy .tier-perk,.t-legend .tier-perk{color:rgba(255,255,255,.42);}
+
+.points-panel{background:#fff;border-radius:var(--r-xl);padding:1.8rem;border:1.5px solid var(--sand-dark);}
+.pts-balance-row{display:flex;align-items:baseline;gap:7px;margin-bottom:.4rem;}
+.pts-big{font-family:'Fraunces',serif;font-size:2.8rem;font-weight:900;color:var(--leaf);line-height:1;}
+.pts-label{font-size:.77rem;color:var(--ink-light);}
+.pts-tier-label{color:var(--leaf);font-weight:500;}
+.progress-bar-track{background:var(--sand);border-radius:100px;height:7px;margin:.9rem 0;overflow:hidden;}
+.progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--leaf-light),var(--leaf));border-radius:100px;width:62%;transition:width .8s ease;}
+.progress-labels{display:flex;justify-content:space-between;font-size:.67rem;color:var(--ink-light);margin-top:-4px;margin-bottom:1.3rem;}
+.earn-section{border-top:1px solid var(--sand);padding-top:1.1rem;}
+.earn-section-title{font-size:.74rem;font-weight:500;color:var(--ink);margin-bottom:7px;}
+.earn-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--sand);}
+.earn-item:last-child{border-bottom:none;}
+.earn-icon{width:33px;height:33px;border-radius:9px;background:var(--leaf-pale);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;}
+.earn-name{font-size:.82rem;font-weight:500;color:var(--ink);}
+.earn-desc{font-size:.68rem;color:var(--ink-light);margin-top:1px;}
+.earn-pts{margin-left:auto;font-family:'Fraunces',serif;font-size:.95rem;font-weight:700;color:var(--gold);}
+.pts-actions{display:flex;gap:7px;margin-top:1.1rem;}
+
+/* ── FOOTER ──────────────────────────────────── */
+footer{background:var(--ink);color:rgba(255,255,255,.45);padding:3.5rem 2.5rem 1.8rem;}
+.footer-inner{max-width:1200px;margin:0 auto;}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;padding-bottom:2.5rem;border-bottom:1px solid rgba(255,255,255,.07);}
+.footer-logo{font-family:'Fraunces',serif;font-size:1.5rem;font-weight:700;color:var(--leaf-light);margin-bottom:.85rem;}
+.footer-tagline{font-size:.8rem;line-height:1.6;color:rgba(255,255,255,.32);max-width:240px;}
+.footer-socials{display:flex;gap:8px;margin-top:1.3rem;}
+.social-btn{
+  width:33px;height:33px;border-radius:50%;
+  background:rgba(255,255,255,.07);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  font-size:.83rem;transition:background .2s;
+}
+.social-btn:hover{background:rgba(82,183,136,.2);}
+.footer-col-title{font-size:.7rem;font-weight:600;color:rgba(255,255,255,.65);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.9rem;}
+.footer-links{list-style:none;}
+.footer-links li{margin-bottom:7px;}
+.footer-links a{font-size:.79rem;color:rgba(255,255,255,.32);text-decoration:none;transition:color .2s;}
+.footer-links a:hover{color:var(--leaf-light);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:1.3rem;font-size:.71rem;}
+.footer-pledge{display:flex;align-items:center;gap:7px;color:rgba(255,255,255,.28);}
+
+/* ── CHATBOT ──────────────────────────────────── */
+.chat-fab{
+  position:fixed;bottom:26px;right:26px;z-index:500;
+  width:56px;height:56px;border-radius:50%;
+  background:var(--leaf);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.35rem;
+  box-shadow:0 8px 30px rgba(45,106,79,.32);
+  transition:all .25s;
+}
+.chat-fab:hover{background:var(--eco-green);transform:scale(1.07);box-shadow:0 12px 40px rgba(45,106,79,.42);}
+.chat-fab-badge{
+  position:absolute;top:-2px;right:-2px;
+  width:14px;height:14px;border-radius:50%;
+  background:var(--gold);border:2px solid #fff;
+  animation:pulse 2.5s infinite;
+}
+
+.chat-window{
+  position:fixed;bottom:94px;right:26px;z-index:500;
+  width:350px;background:var(--white);
+  border-radius:22px;
+  box-shadow:0 20px 70px rgba(26,26,24,.17);
+  border:1px solid rgba(45,106,79,.11);
+  display:none;flex-direction:column;overflow:hidden;
+  animation:chatSlide .28s ease both;
+}
+.chat-window.open{display:flex;}
+@keyframes chatSlide{
+  from{opacity:0;transform:translateY(16px) scale(.97);}
+  to{opacity:1;transform:translateY(0) scale(1);}
+}
+
+.chat-header{
+  background:var(--leaf);padding:.9rem 1.1rem;
+  display:flex;align-items:center;gap:9px;
+}
+.chat-avatar{
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;
+}
+.chat-header-name{font-weight:600;font-size:.87rem;color:#fff;line-height:1;}
+.chat-header-status{font-size:.64rem;color:rgba(255,255,255,.6);margin-top:2px;display:flex;align-items:center;gap:4px;}
+.status-dot{width:5px;height:5px;border-radius:50%;background:#90EE90;flex-shrink:0;}
+.chat-close-btn{
+  margin-left:auto;background:rgba(255,255,255,.15);border:none;
+  border-radius:50%;width:26px;height:26px;cursor:pointer;
+  color:#fff;font-size:.8rem;display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
+}
+.chat-close-btn:hover{background:rgba(255,255,255,.25);}
+
+.chat-messages{
+  flex:1;overflow-y:auto;padding:.9rem;
+  display:flex;flex-direction:column;gap:9px;
+  max-height:320px;min-height:180px;scrollbar-width:thin;
+}
+.chat-msg{display:flex;gap:7px;align-items:flex-end;animation:msgIn .22s ease both;}
+@keyframes msgIn{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
+.chat-msg.user{flex-direction:row-reverse;}
+.msg-avatar{
+  width:24px;height:24px;border-radius:50%;
+  background:var(--leaf-pale);display:flex;align-items:center;
+  justify-content:center;font-size:.7rem;flex-shrink:0;color:var(--leaf);
+}
+.chat-msg.user .msg-avatar{background:var(--leaf);color:#fff;}
+.msg-bubble{
+  background:var(--sand);border-radius:13px 13px 13px 3px;
+  padding:8px 12px;font-size:.79rem;line-height:1.5;
+  color:var(--ink);max-width:230px;
+}
+.chat-msg.user .msg-bubble{
+  background:var(--leaf);color:#fff;
+  border-radius:13px 13px 3px 13px;
+}
+.typing-ind{display:flex;gap:3px;align-items:center;padding:3px 0;}
+.typing-dot{
+  width:5px;height:5px;border-radius:50%;background:var(--ink-light);
+  opacity:.35;animation:typeBounce 1.2s infinite;
+}
+.typing-dot:nth-child(2){animation-delay:.2s;}
+.typing-dot:nth-child(3){animation-delay:.4s;}
+@keyframes typeBounce{
+  0%,60%,100%{transform:translateY(0);opacity:.35;}
+  30%{transform:translateY(-5px);opacity:.9;}
+}
+
+.chat-quick{display:flex;gap:5px;flex-wrap:wrap;padding:0 .9rem .7rem;}
+.quick-btn{
+  background:var(--leaf-pale);border:1px solid rgba(45,106,79,.18);
+  border-radius:100px;padding:4px 11px;
+  font-size:.68rem;color:var(--leaf);font-weight:500;
+  cursor:pointer;font-family:'DM Sans',sans-serif;
+  transition:all .2s;white-space:nowrap;
+}
+.quick-btn:hover{background:var(--leaf);color:#fff;}
+
+.chat-input-row{
+  display:flex;gap:7px;align-items:center;
+  padding:9px 10px;border-top:1px solid rgba(45,106,79,.08);background:#fff;
+}
+.chat-input{
+  flex:1;border:1.5px solid rgba(45,106,79,.14);border-radius:100px;
+  padding:7px 12px;font-size:.79rem;color:var(--ink);
+  font-family:'DM Sans',sans-serif;outline:none;background:#fff;
+  transition:border-color .2s;
+}
+.chat-input:focus{border-color:var(--leaf-light);}
+.chat-input::placeholder{color:rgba(74,74,69,.38);}
+.chat-send-btn{
+  width:34px;height:34px;border-radius:50%;
+  background:var(--leaf);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;flex-shrink:0;transition:all .2s;
+}
+.chat-send-btn:hover{background:var(--eco-green);transform:scale(1.05);}
+
+/* ── RESPONSIVE ──────────────────────────────── */
+@media(max-width:900px){
+  nav{padding:0 1.2rem;}
+  .nav-center{display:none;}
+  .hero{padding:6.5rem 1.3rem 2.5rem;}
+  .search-card{flex-wrap:wrap;}
+  .s-field{border-right:none;border-bottom:1.5px solid rgba(45,106,79,.08);min-width:calc(50% - 6px);}
+  .s-field:last-of-type{border-bottom:none;}
+  .planner-inner{grid-template-columns:1fr;gap:2rem;}
+  .planner-section{padding:4rem 1.3rem;}
+  .section-wrap{padding:4rem 1.3rem;}
+  .dest-grid{grid-template-columns:1fr;}
+  .eco-explainer{grid-template-columns:1fr;gap:2rem;}
+  .rewards-grid{grid-template-columns:1fr;gap:2rem;}
+  .footer-top{grid-template-columns:1fr 1fr;}
+  .chat-window{width:calc(100vw - 2rem);right:1rem;bottom:88px;}
+  .chat-fab{bottom:18px;right:18px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════ NAV ════════════ -->
+<nav>
+  <div class="nav-left">
+    <a class="nav-logo" href="#">
+      <div class="logo-leaf"></div>
+      EcoWander
+    </a>
+    <button class="nav-ai-btn" onclick="document.getElementById('plan').scrollIntoView({behavior:'smooth'})">
+      ✦ Plan my trip
+    </button>
+  </div>
+
+  <ul class="nav-center">
+    <li><a href="#discover">Discover</a></li>
+    <li><a href="#booking">Booking</a></li>
+    <li><a href="#rewards">Rewards</a></li>
+    <li><a href="#eco">Eco Ratings</a></li>
+  </ul>
+
+  <div class="nav-right">
+    <!-- Points (logged-in only) -->
+    <div class="nav-points" id="navPts" style="display:none" onclick="document.getElementById('rewards').scrollIntoView({behavior:'smooth'})">
+      <div class="pts-gem">✦</div>
+      2,840 pts
+    </div>
+
+    <!-- Region / Currency -->
+    <button class="nav-region-btn" onclick="toggleDP('regionPanel','regionOverlay',event)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      <span id="regionLabel">🇦🇺 AUD</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:9px;height:9px;opacity:.4"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+
+    <!-- Settings -->
+    <button class="nav-region-btn" onclick="toggleDP('settingsPanel','settingsOverlay',event)" title="Settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
+
+    <!-- Auth logged out -->
+    <div id="authOut" style="display:flex;gap:6px;align-items:center;">
+      <button class="nav-login-btn" onclick="openAuth('login')">Log in</button>
+      <button class="nav-signup-btn" onclick="openAuth('signup')">Sign up</button>
+    </div>
+
+    <!-- Auth logged in -->
+    <button class="nav-avatar" id="authIn" onclick="toggleDP('acctPanel','acctOverlay',event)">AJ</button>
+  </div>
+</nav>
+
+<!-- ══ REGION DROPDOWN ══ -->
+<div class="dropdown-overlay" id="regionOverlay" onclick="closeAllDP()"></div>
+<div class="dropdown-panel" id="regionPanel" style="display:none;top:68px;right:90px;">
+  <div class="dp-header">Region &amp; Currency</div>
+  <div class="dp-section">
+    <div class="dp-section-title">Select region</div>
+    <div class="dp-option sel" onclick="setRegion(this,'🇦🇺','AUD','Australia')"><span class="dp-flag">🇦🇺</span> Australia</div>
+    <div class="dp-option" onclick="setRegion(this,'🇺🇸','USD','United States')"><span class="dp-flag">🇺🇸</span> United States</div>
+    <div class="dp-option" onclick="setRegion(this,'🇳🇿','NZD','New Zealand')"><span class="dp-flag">🇳🇿</span> New Zealand</div>
+    <div class="dp-option" onclick="setRegion(this,'🇬🇧','GBP','United Kingdom')"><span class="dp-flag">🇬🇧</span> United Kingdom</div>
+    <div class="dp-option" onclick="setRegion(this,'🇪🇺','EUR','Europe')"><span class="dp-flag">🇪🇺</span> Europe</div>
+    <div class="dp-option" onclick="setRegion(this,'🇸🇬','SGD','Singapore')"><span class="dp-flag">🇸🇬</span> Singapore</div>
+    <div class="dp-option" onclick="setRegion(this,'🇨🇦','CAD','Canada')"><span class="dp-flag">🇨🇦</span> Canada</div>
+    <div class="dp-option" onclick="setRegion(this,'🇯🇵','JPY','Japan')"><span class="dp-flag">🇯🇵</span> Japan</div>
+  </div>
+</div>
+
+<!-- ══ SETTINGS DROPDOWN ══ -->
+<div class="dropdown-overlay" id="settingsOverlay" onclick="closeAllDP()"></div>
+<div class="dropdown-panel settings-panel" id="settingsPanel" style="display:none;top:68px;right:56px;">
+  <div class="dp-header">Settings</div>
+  <div class="settings-row">
+    <div><div class="settings-label">Email notifications</div><div class="settings-sub">Trip updates & deals</div></div>
+    <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+  </div>
+  <div class="settings-row">
+    <div><div class="settings-label">Carbon offset reminders</div><div class="settings-sub">Nudge for high-impact choices</div></div>
+    <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+  </div>
+  <div class="settings-row">
+    <div><div class="settings-label">Dark mode</div><div class="settings-sub">Easy on the eyes</div></div>
+    <div class="toggle" onclick="this.classList.toggle('on')"></div>
+  </div>
+  <div class="settings-row">
+    <div><div class="settings-label">Eco score overlay</div><div class="settings-sub">Show ratings on all cards</div></div>
+    <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+  </div>
+  <div class="settings-row" style="border:none">
+    <div><div class="settings-label">Distance units</div></div>
+    <select style="border:1.5px solid rgba(45,106,79,.18);border-radius:8px;padding:4px 8px;font-family:'DM Sans',sans-serif;font-size:.78rem;outline:none;background:#fff;">
+      <option>km</option><option>miles</option>
+    </select>
+  </div>
+</div>
+
+<!-- ══ ACCOUNT DROPDOWN ══ -->
+<div class="dropdown-overlay" id="acctOverlay" onclick="closeAllDP()"></div>
+<div class="dropdown-panel acct-panel" id="acctPanel" style="display:none;top:68px;right:14px;">
+  <div class="acct-user-row">
+    <div class="acct-avatar">AJ</div>
+    <div>
+      <div class="acct-name">Alex Johnson</div>
+      <div class="acct-email">alex@email.com</div>
+      <div class="acct-tier">🌿 Sprout tier</div>
+    </div>
+  </div>
+  <div class="acct-pts-row">
+    <div class="acct-pts-label">EcoWander Points</div>
+    <div class="acct-pts-val">2,840 pts ✦</div>
+  </div>
+  <div class="acct-item" onclick="document.getElementById('rewards').scrollIntoView({behavior:'smooth'});closeAllDP()"><span class="acct-icon">🎁</span> My rewards &amp; points</div>
+  <div class="acct-item"><span class="acct-icon">🗺️</span> My trips</div>
+  <div class="acct-item"><span class="acct-icon">⭐</span> My reviews</div>
+  <div class="acct-item" onclick="toggleDP('settingsPanel','settingsOverlay',event)"><span class="acct-icon">⚙️</span> Account settings</div>
+  <div class="acct-item"><span class="acct-icon">🔔</span> Notifications</div>
+  <div class="dp-divider" style="margin:3px 0;"></div>
+  <div class="acct-item danger" onclick="doLogout()"><span class="acct-icon">↩️</span> Log out</div>
+</div>
+
+<!-- ══ AUTH MODAL ══ -->
+<div class="modal-backdrop" id="authModal" onclick="handleBackdropClick(event)">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeAuth()">✕</button>
+    <div class="modal-title" id="authTitle">Welcome back</div>
+    <p class="modal-sub" id="authSub">Log in to access your eco-trips and rewards.</p>
+    <div class="modal-tab-row">
+      <button class="modal-tab active" id="tabLogin" onclick="switchAuth('login')">Log in</button>
+      <button class="modal-tab" id="tabSignup" onclick="switchAuth('signup')">Sign up</button>
+    </div>
+    <!-- Login form -->
+    <div id="loginForm">
+      <div class="modal-field">
+        <label class="modal-label">Email address</label>
+        <input class="modal-input" type="email" placeholder="you@email.com">
+      </div>
+      <div class="modal-field">
+        <label class="modal-label">Password</label>
+        <input class="modal-input" type="password" placeholder="••••••••">
+      </div>
+      <button class="modal-submit" onclick="doLogin()">Log in →</button>
+      <div class="modal-divider">or continue with</div>
+      <div class="modal-oauth">
+        <button class="modal-oauth-btn">🌐 Google</button>
+        <button class="modal-oauth-btn">🍎 Apple</button>
+      </div>
+      <div class="modal-switch">No account? <a onclick="switchAuth('signup')">Sign up free</a></div>
+    </div>
+    <!-- Signup form -->
+    <div id="signupForm" style="display:none">
+      <div class="modal-name-row">
+        <div class="modal-field"><label class="modal-label">First name</label><input class="modal-input" type="text" placeholder="Alex"></div>
+        <div class="modal-field"><label class="modal-label">Last name</label><input class="modal-input" type="text" placeholder="Johnson"></div>
+      </div>
+      <div class="modal-field"><label class="modal-label">Email address</label><input class="modal-input" type="email" placeholder="you@email.com"></div>
+      <div class="modal-field"><label class="modal-label">Password</label><input class="modal-input" type="password" placeholder="Create a password"></div>
+      <button class="modal-submit" onclick="doLogin()">Create account →</button>
+      <div class="modal-divider">or continue with</div>
+      <div class="modal-oauth">
+        <button class="modal-oauth-btn">🌐 Google</button>
+        <button class="modal-oauth-btn">🍎 Apple</button>
+      </div>
+      <div class="modal-switch">Already have an account? <a onclick="switchAuth('login')">Log in</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ HERO ════════════ -->
+<section class="hero">
+  <div class="hero-kicker"><div class="kicker-dot"></div>Sustainable Adventure Platform</div>
+  <h1>Where to<em>?</em></h1>
+  <p class="hero-sub">Eco-rated adventures, guilt-free planning. Find your next journey — every option scored for its impact on the planet.</p>
+
+  <div class="search-widget">
+    <!-- Category tabs -->
+    <div class="search-tab-row">
+      <button class="s-tab active" onclick="setSearchTab(this,'all')">🔍 Search All</button>
+      <button class="s-tab" onclick="setSearchTab(this,'hotels')">🏡 Hotels</button>
+      <button class="s-tab" onclick="setSearchTab(this,'things')">🎒 Things to Do</button>
+      <button class="s-tab" onclick="setSearchTab(this,'restaurants')">🍽️ Restaurants</button>
+      <button class="s-tab" onclick="setSearchTab(this,'flights')">✈️ Flights</button>
+    </div>
+
+    <!-- Trip type (shown for flights / all) -->
+    <div class="trip-type-row" id="tripTypeRow">
+      <button class="tt-btn on" id="ttReturn" onclick="setTripType('return')">⇄ Return</button>
+      <button class="tt-btn" id="ttOneWay" onclick="setTripType('oneway')">→ One way</button>
+    </div>
+
+    <!-- Search card -->
+    <div class="search-card" id="searchCard">
+      <!-- Default (all / hotels / things / restaurants) -->
+      <div class="s-field" style="flex:2" id="sfWhere">
+        <span class="s-field-label">Where to?</span>
+        <input type="text" id="mainSearch" placeholder="Places, eco-stays, things to do…">
+      </div>
+      <div class="s-field" id="sfCheckin">
+        <span class="s-field-label">Check in</span>
+        <input type="date" id="checkinDate">
+      </div>
+      <div class="s-field" id="sfCheckout">
+        <span class="s-field-label">Check out</span>
+        <input type="date" id="checkoutDate">
+      </div>
+      <div class="s-field" id="sfGuests" style="min-width:110px">
+        <span class="s-field-label">Guests</span>
+        <select><option>1 guest</option><option>2 guests</option><option>3 guests</option><option>4+ guests</option></select>
+      </div>
+      <button class="s-search-btn" onclick="handleSearch()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        Search
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="hero-stats">
+    <div style="text-align:center"><div class="h-stat-val">48k+</div><div class="h-stat-label">Eco-rated destinations</div></div>
+    <div style="text-align:center"><div class="h-stat-val">12M</div><div class="h-stat-label">kg CO₂ saved</div></div>
+    <div style="text-align:center"><div class="h-stat-val">96%</div><div class="h-stat-label">Traveler satisfaction</div></div>
+  </div>
+
+  <!-- Destination chips -->
+  <div class="hero-chips">
+    <div class="dest-chip" onclick="document.getElementById('discover').scrollIntoView({behavior:'smooth'})">
+      <div class="chip-img">
+        <div class="chip-img-bg" style="background:linear-gradient(135deg,#1B4332,#2D6A4F)"></div>
+        <svg style="position:absolute;bottom:0;width:100%" viewBox="0 0 150 52" xmlns="http://www.w3.org/2000/svg"><polygon points="0,52 17,19 34,52" fill="rgba(0,0,0,.36)"/><polygon points="24,52 44,11 64,52" fill="rgba(0,0,0,.3)"/><polygon points="52,52 77,7 102,52" fill="rgba(0,0,0,.36)"/><polygon points="90,52 110,17 130,52" fill="rgba(0,0,0,.28)"/></svg>
+      </div>
+      <div class="chip-info"><div class="chip-name">Daintree, AU</div><div class="chip-eco">🌿 Eco 94</div></div>
+    </div>
+    <div class="dest-chip" onclick="document.getElementById('discover').scrollIntoView({behavior:'smooth'})">
+      <div class="chip-img">
+        <div class="chip-img-bg" style="background:linear-gradient(135deg,#1B4965,#2C7DA0)"></div>
+        <svg style="position:absolute;bottom:0;width:100%" viewBox="0 0 150 52" xmlns="http://www.w3.org/2000/svg"><polygon points="0,52 38,9 76,28 114,4 150,21 150,52" fill="rgba(0,0,0,.3)"/></svg>
+      </div>
+      <div class="chip-info"><div class="chip-name">Lofoten, NO</div><div class="chip-eco">🌿 Eco 89</div></div>
+    </div>
+    <div class="dest-chip" onclick="document.getElementById('discover').scrollIntoView({behavior:'smooth'})">
+      <div class="chip-img">
+        <div class="chip-img-bg" style="background:linear-gradient(135deg,#006466,#0B525B)"></div>
+        <svg style="position:absolute;bottom:0;width:100%" viewBox="0 0 150 52" xmlns="http://www.w3.org/2000/svg"><path d="M0,33 Q38,9 75,28 Q113,48 150,19 L150,52 L0,52 Z" fill="rgba(0,0,0,.25)"/></svg>
+      </div>
+      <div class="chip-info"><div class="chip-name">Palawan, PH</div><div class="chip-eco">🌿 Eco 91</div></div>
+    </div>
+    <div class="dest-chip" onclick="document.getElementById('discover').scrollIntoView({behavior:'smooth'})">
+      <div class="chip-img">
+        <div class="chip-img-bg" style="background:linear-gradient(135deg,#1A3A1A,#3D7A3D)"></div>
+        <svg style="position:absolute;bottom:0;width:100%" viewBox="0 0 150 52" xmlns="http://www.w3.org/2000/svg"><polygon points="5,52 19,17 33,52" fill="rgba(0,0,0,.36)"/><polygon points="38,52 57,7 76,52" fill="rgba(0,0,0,.3)"/><polygon points="75,52 95,14 115,52" fill="rgba(0,0,0,.35)"/><polygon points="108,52 128,19 148,52" fill="rgba(0,0,0,.27)"/></svg>
+      </div>
+      <div class="chip-info"><div class="chip-name">Amazon, EC</div><div class="chip-eco">🌿 Eco 96</div></div>
+    </div>
+    <div class="dest-chip" onclick="document.getElementById('discover').scrollIntoView({behavior:'smooth'})">
+      <div class="chip-img">
+        <div class="chip-img-bg" style="background:linear-gradient(135deg,#3D2B1F,#A67C5B)"></div>
+        <svg style="position:absolute;bottom:0;width:100%" viewBox="0 0 150 52" xmlns="http://www.w3.org/2000/svg"><polygon points="0,52 47,9 85,33 123,4 150,24 150,52" fill="rgba(0,0,0,.3)"/></svg>
+      </div>
+      <div class="chip-info"><div class="chip-name">Bhutan, BT</div><div class="chip-eco">🌿 Eco 98</div></div>
+    </div>
+    <div class="dest-chip" onclick="document.getElementById('discover').scrollIntoView({behavior:'smooth'})">
+      <div class="chip-img">
+        <div class="chip-img-bg" style="background:linear-gradient(135deg,#6B3D2B,#C4783C)"></div>
+        <svg style="position:absolute;bottom:0;width:100%" viewBox="0 0 150 52" xmlns="http://www.w3.org/2000/svg"><rect x="9" y="24" width="20" height="28" fill="rgba(0,0,0,.3)"/><polygon points="9,24 19,8 29,24" fill="rgba(0,0,0,.3)"/><rect x="46" y="28" width="17" height="24" fill="rgba(0,0,0,.25)"/><polygon points="46,28 54,14 62,28" fill="rgba(0,0,0,.25)"/><rect x="84" y="26" width="22" height="26" fill="rgba(0,0,0,.27)"/><polygon points="82,26 95,9 108,26" fill="rgba(0,0,0,.27)"/></svg>
+      </div>
+      <div class="chip-info"><div class="chip-name">Luang Prabang</div><div class="chip-eco">🌿 Eco 82</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ AI PLANNER ════════════ -->
+<section class="planner-section" id="plan">
+  <div class="planner-inner">
+    <div>
+      <div class="s-kicker">AI Trip Planner</div>
+      <h2 class="s-title">Your <em>perfect</em> green adventure, in minutes.</h2>
+      <p class="s-sub">Tell us your vibe and values. Our AI curates a personalised itinerary scored for eco-impact — flights, stays, activities, all optimised together.</p>
+      <div class="planner-steps-list">
+        <div class="psl-item"><div class="psl-num">1</div><div><div class="psl-name">Choose your adventure vibe</div><div class="psl-desc">Forest therapy, mountain trek, coastal wander &amp; more</div></div></div>
+        <div class="psl-item"><div class="psl-num">2</div><div><div class="psl-name">Set your trip details &amp; dates</div><div class="psl-desc">One-way or return, from/to, departure &amp; return dates</div></div></div>
+        <div class="psl-item"><div class="psl-num">3</div><div><div class="psl-name">Pick your eco values</div><div class="psl-desc">Local only, zero-waste, slow travel, carbon-neutral stays</div></div></div>
+        <div class="psl-item"><div class="psl-num">4</div><div><div class="psl-name">Receive your personalised plan</div><div class="psl-desc">Full itinerary with eco-scores, carbon savings &amp; rewards</div></div></div>
+      </div>
+    </div>
+
+    <div class="planner-form">
+      <div class="step-bars" id="stepBars">
+        <div class="step-bar active" onclick="goStep(0)"></div>
+        <div class="step-bar" onclick="goStep(1)"></div>
+        <div class="step-bar" onclick="goStep(2)"></div>
+        <div class="step-bar" onclick="goStep(3)"></div>
+      </div>
+
+      <!-- Step 0: Vibe -->
+      <div class="planner-step active" id="ps0">
+        <div class="step-label">Step 1 of 4</div>
+        <div class="step-q">What's your adventure vibe?</div>
+        <div class="vibe-grid">
+          <div class="vibe-card" onclick="pickVibe(this)"><div class="v-icon">🏔️</div><div class="v-name">Mountain Trek</div><div class="v-desc">High altitude, pure air</div></div>
+          <div class="vibe-card" onclick="pickVibe(this)"><div class="v-icon">🌊</div><div class="v-name">Coastal Escape</div><div class="v-desc">Shores, snorkelling, swell</div></div>
+          <div class="vibe-card" onclick="pickVibe(this)"><div class="v-icon">🌿</div><div class="v-name">Forest Immersion</div><div class="v-desc">Canopy walks, birdsong</div></div>
+          <div class="vibe-card" onclick="pickVibe(this)"><div class="v-icon">🏜️</div><div class="v-name">Desert Odyssey</div><div class="v-desc">Dunes, stars, silence</div></div>
+          <div class="vibe-card" onclick="pickVibe(this)"><div class="v-icon">🛶</div><div class="v-name">River &amp; Wetlands</div><div class="v-desc">Kayak, slow paddle</div></div>
+          <div class="vibe-card" onclick="pickVibe(this)"><div class="v-icon">🏘️</div><div class="v-name">Cultural Village</div><div class="v-desc">Local life, traditions</div></div>
+        </div>
+        <div class="step-nav"><div></div><button class="btn-next" onclick="nextStep()">Next →</button></div>
+      </div>
+
+      <!-- Step 1: Trip details with from/to + dates -->
+      <div class="planner-step" id="ps1">
+        <div class="step-label">Step 2 of 4</div>
+        <div class="step-q">Where &amp; when?</div>
+
+        <!-- Trip type -->
+        <div class="trip-type-row-dark">
+          <button class="tt-dark-btn on" id="pttReturn" onclick="setPlanTripType('return')">⇄ Return trip</button>
+          <button class="tt-dark-btn" id="pttOneWay" onclick="setPlanTripType('oneway')">→ One way</button>
+        </div>
+
+        <!-- From / To -->
+        <div class="f-row2">
+          <div class="f-field">
+            <label class="f-label">From</label>
+            <input class="f-input" type="text" placeholder="City or airport (e.g. PER)" id="pFrom">
+          </div>
+          <div class="f-field f-swap-wrap">
+            <label class="f-label">To</label>
+            <input class="f-input" type="text" placeholder="Destination or region" id="pTo">
+            <button class="f-swap-btn" onclick="swapFromTo()" title="Swap">⇄</button>
+          </div>
+        </div>
+
+        <!-- Dates -->
+        <div class="f-row2">
+          <div class="f-field">
+            <label class="f-label">Departure date</label>
+            <input class="f-input" type="date" id="pDepart">
+          </div>
+          <div class="f-field" id="returnDateWrap">
+            <label class="f-label">Return date</label>
+            <input class="f-input" type="date" id="pReturn">
+          </div>
+        </div>
+
+        <!-- Budget + travellers -->
+        <div class="f-row2">
+          <div class="f-field">
+            <label class="f-label">Budget (per person)</label>
+            <select class="f-input"><option>Under $500</option><option>$500 – $1,500</option><option selected>$1,500 – $3,000</option><option>$3,000+</option></select>
+          </div>
+          <div class="f-field">
+            <label class="f-label">Travellers</label>
+            <select class="f-input"><option>Solo</option><option selected>Couple</option><option>Small group (3–5)</option><option>Family</option></select>
+          </div>
+        </div>
+
+        <div class="step-nav">
+          <button class="btn-back" onclick="prevStep()">← Back</button>
+          <button class="btn-next" onclick="nextStep()">Next →</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Eco prefs -->
+      <div class="planner-step" id="ps2">
+        <div class="step-label">Step 3 of 4</div>
+        <div class="step-q">What eco values matter most?</div>
+        <p style="font-size:.71rem;color:rgba(255,255,255,.38);margin-bottom:.9rem;">Select all that apply — these shape your personalised eco-score.</p>
+        <div class="eco-tags">
+          <span class="eco-tag on" onclick="this.classList.toggle('on')">🌱 Low carbon travel</span>
+          <span class="eco-tag on" onclick="this.classList.toggle('on')">🏡 Local accommodation</span>
+          <span class="eco-tag" onclick="this.classList.toggle('on')">♻️ Zero-waste options</span>
+          <span class="eco-tag on" onclick="this.classList.toggle('on')">🤝 Community-owned</span>
+          <span class="eco-tag" onclick="this.classList.toggle('on')">🐾 Wildlife-friendly</span>
+          <span class="eco-tag" onclick="this.classList.toggle('on')">🌊 Ocean-positive</span>
+          <span class="eco-tag on" onclick="this.classList.toggle('on')">🌾 Farm-to-table dining</span>
+          <span class="eco-tag" onclick="this.classList.toggle('on')">🚲 Car-free itinerary</span>
+          <span class="eco-tag" onclick="this.classList.toggle('on')">☀️ Renewable energy stays</span>
+          <span class="eco-tag" onclick="this.classList.toggle('on')">🛖 Indigenous-led tours</span>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="prevStep()">← Back</button>
+          <button class="btn-next" onclick="nextStep()">Next →</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Notes -->
+      <div class="planner-step" id="ps3">
+        <div class="step-label">Step 4 of 4</div>
+        <div class="step-q">Any special requests?</div>
+        <div class="f-field">
+          <label class="f-label">Accessibility needs or personal notes</label>
+          <textarea class="f-input" rows="3" placeholder="E.g. vegetarian meals, mobility access, travelling with pets…" style="resize:vertical"></textarea>
+        </div>
+        <div class="f-field">
+          <label class="f-label">Travel style</label>
+          <select class="f-input">
+            <option>Relaxed — I want to soak it in</option>
+            <option>Balanced — a mix of activity &amp; rest</option>
+            <option>Action-packed — keep me moving</option>
+          </select>
+        </div>
+        <div class="step-nav">
+          <button class="btn-back" onclick="prevStep()">← Back</button>
+          <button class="btn-next" onclick="generatePlan()" style="background:var(--gold-light);color:var(--ink)">✦ Generate my plan</button>
+        </div>
+      </div>
+
+      <!-- AI Result -->
+      <div class="ai-result" id="aiResult">
+        <div class="result-hdr">
+          <div class="result-avatar">🌿</div>
+          <div>
+            <div style="font-size:.82rem;font-weight:500;color:#fff">EcoWander AI</div>
+            <div class="ai-typing" id="aiTyping">Crafting your perfect green adventure…</div>
+          </div>
+        </div>
+        <div id="resultContent" style="display:none">
+          <div class="result-card">
+            <div class="result-card-hdr">
+              <div>
+                <div class="result-trip-name">Fiordland &amp; Routeburn, NZ</div>
+                <div class="result-trip-sub">9 days · Forest Immersion + Mountain Trek · Return: PER → ZQN</div>
+              </div>
+              <div class="eco-pill">🌿 Eco 92</div>
+            </div>
+            <div class="result-items">
+              <div class="r-item"><div class="r-icon">✈️</div>Air NZ (SAF offset) · Perth → Queenstown, return included</div>
+              <div class="r-item"><div class="r-icon">🏡</div>Eco-lodge: Fjordland Retreat (solar-powered, farm-to-table)</div>
+              <div class="r-item"><div class="r-icon">🥾</div>Guided Routeburn Track (DOC-certified, small group)</div>
+              <div class="r-item"><div class="r-icon">🍽️</div>Local dining: Fergburger + Te Anau farmhouse dinner</div>
+              <div class="r-item"><div class="r-icon">🛶</div>Milford Sound kayak (no-engine tour)</div>
+            </div>
+            <div class="result-co2">
+              <div><div class="co2-label">Carbon saved vs. conventional trip</div><div class="co2-val">−640 kg CO₂</div></div>
+              <div style="text-align:right"><div class="co2-label">Trip total (from)</div><div style="font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;color:#fff">$2,180</div></div>
+            </div>
+            <div class="result-pts-row">
+              <div class="rpts-text">EcoWander Points you'll earn</div>
+              <div class="rpts-val">+920 pts ✦</div>
+            </div>
+          </div>
+          <button class="btn-book-trip" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Book this trip →</button>
+          <button class="btn-reset" onclick="resetPlanner()">Start over</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════ ECO RATINGS ════════════ -->
+<div class="section-wrap" id="eco">
+  <div class="eco-explainer">
+    <div>
+      <div class="s-kicker">Eco Rating System</div>
+      <h2 class="s-title">Every option has an <em>honest</em> green score.</h2>
+      <p class="s-sub">Our ratings go deeper than a recycling bin in the room. We evaluate carbon footprint, community impact, biodiversity, water use, and local economic benefit.</p>
+      <div style="display:flex;gap:1.3rem;flex-wrap:wrap;margin-top:1.5rem">
+        <div style="text-align:center"><div style="font-family:'Fraunces',serif;font-size:1.5rem;font-weight:900;color:var(--leaf)">6</div><div style="font-size:.68rem;color:var(--ink-light)">scoring dimensions</div></div>
+        <div style="text-align:center"><div style="font-family:'Fraunces',serif;font-size:1.5rem;font-weight:900;color:var(--leaf)">48k+</div><div style="font-size:.68rem;color:var(--ink-light)">rated experiences</div></div>
+        <div style="text-align:center"><div style="font-family:'Fraunces',serif;font-size:1.5rem;font-weight:900;color:var(--leaf)">Live</div><div style="font-size:.68rem;color:var(--ink-light)">data updates</div></div>
+      </div>
+    </div>
+    <div class="eco-grades">
+      <div class="grade-card"><div class="grade-circle ga">A</div><div><div class="grade-label">Certified Green</div><div class="grade-desc">Renewable energy, zero-waste, community ownership, carbon-negative operations.</div></div><div class="grade-co2"><div class="co2-big">−200kg</div><div class="co2-sm">CO₂ saved</div></div></div>
+      <div class="grade-card"><div class="grade-circle gb">B</div><div><div class="grade-label">Low Impact</div><div class="grade-desc">Strong sustainability practices, local sourcing, offset programs in place.</div></div><div class="grade-co2"><div class="co2-big">−80kg</div><div class="co2-sm">CO₂ saved</div></div></div>
+      <div class="grade-card"><div class="grade-circle gc">C</div><div><div class="grade-label">Improving</div><div class="grade-desc">Working toward sustainability goals — some practices need improvement.</div></div><div class="grade-co2"><div class="co2-big">+40kg</div><div class="co2-sm">CO₂ impact</div></div></div>
+      <div class="grade-card"><div class="grade-circle gd">D</div><div><div class="grade-label">High Impact</div><div class="grade-desc">Significant environmental or social concerns. Approach with care.</div></div><div class="grade-co2"><div class="co2-big">+240kg</div><div class="co2-sm">CO₂ impact</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ DESTINATIONS ════════════ -->
+<div class="destinations-bg" id="discover">
+  <div class="destinations-inner">
+    <div class="s-kicker">Discover Destinations</div>
+    <h2 class="s-title">Explore the world's most <em>responsible</em> adventures.</h2>
+    <p class="s-sub">Every destination is hand-vetted and eco-scored. Filter by vibe, budget, or impact level.</p>
+    <div class="filter-row">
+      <button class="filter-btn active" onclick="setFilter(this,'all')">All</button>
+      <button class="filter-btn" onclick="setFilter(this,'mountain')">🏔️ Mountain</button>
+      <button class="filter-btn" onclick="setFilter(this,'coastal')">🌊 Coastal</button>
+      <button class="filter-btn" onclick="setFilter(this,'forest')">🌿 Forest</button>
+      <button class="filter-btn" onclick="setFilter(this,'cultural')">🏘️ Cultural</button>
+      <button class="filter-btn" onclick="setFilter(this,'budget')">💚 Under $1k</button>
+      <button class="filter-btn" onclick="setFilter(this,'grade-a')">🌱 Grade A only</button>
+    </div>
+    <div class="dest-grid" id="destGrid">
+      <div class="dest-card" data-type="forest mountain">
+        <div class="dest-img-wrap">
+          <div class="dest-img-bg" style="background:linear-gradient(135deg,#1B4332,#2D6A4F,#40916C);position:absolute;inset:0"></div>
+          <svg style="position:absolute;bottom:0;width:100%" viewBox="0 0 360 120" xmlns="http://www.w3.org/2000/svg"><polygon points="0,120 30,50 60,80 90,30 120,65 150,20 180,55 210,35 240,70 270,45 300,75 330,40 360,60 360,120" fill="rgba(0,0,0,.35)"/><polygon points="0,120 20,70 50,90 80,55 110,80 140,45 170,70 200,50 230,80 260,60 290,85 320,65 360,75 360,120" fill="rgba(0,0,0,.2)"/></svg>
+          <div class="dest-img-overlay"></div>
+          <div class="dest-eco-dots"><div class="eco-dot"></div><div class="eco-dot"></div></div>
+          <div class="dest-img-label"><div class="dest-name">Daintree Rainforest</div><div class="dest-country">Queensland, Australia</div></div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-meta"><div class="eco-bar-wrap"><div class="eco-bar-label"><span>Eco Score</span><span>94/100 · Grade A</span></div><div class="eco-bar-track"><div class="eco-bar-fill" style="width:94%"></div></div></div><div class="dest-price-block"><div class="dest-price-val">$680</div><div class="dest-price-note">3 nights incl.</div></div></div>
+          <div class="dest-tags"><span class="d-tag">Rainforest Walk</span><span class="d-tag">Bird Watching</span><span class="d-tag">Indigenous Tour</span></div>
+          <div class="dest-footer"><div class="carbon-save">🌱 −180 kg CO₂</div><button class="btn-view">View trip</button></div>
+        </div>
+      </div>
+      <div class="dest-card" data-type="mountain">
+        <div class="dest-img-wrap">
+          <div class="dest-img-bg" style="background:linear-gradient(135deg,#1B4965,#2C7DA0,#468FAF);position:absolute;inset:0"></div>
+          <svg style="position:absolute;bottom:0;width:100%" viewBox="0 0 360 120" xmlns="http://www.w3.org/2000/svg"><polygon points="0,120 80,30 140,70 200,20 260,55 300,35 360,50 360,120" fill="rgba(0,0,0,.3)"/></svg>
+          <div class="dest-img-overlay"></div>
+          <div class="dest-eco-dots"><div class="eco-dot"></div></div>
+          <div class="dest-img-label"><div class="dest-name">Lofoten Islands</div><div class="dest-country">Norway</div></div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-meta"><div class="eco-bar-wrap"><div class="eco-bar-label"><span>Eco Score</span><span>89/100 · Grade A</span></div><div class="eco-bar-track"><div class="eco-bar-fill" style="width:89%"></div></div></div><div class="dest-price-block"><div class="dest-price-val">$2,100</div><div class="dest-price-note">7 nights incl.</div></div></div>
+          <div class="dest-tags"><span class="d-tag">Northern Lights</span><span class="d-tag">Sea Kayak</span><span class="d-tag">Fishing Village</span></div>
+          <div class="dest-footer"><div class="carbon-save">🌱 −290 kg CO₂</div><button class="btn-view">View trip</button></div>
+        </div>
+      </div>
+      <div class="dest-card" data-type="cultural">
+        <div class="dest-img-wrap">
+          <div class="dest-img-bg" style="background:linear-gradient(135deg,#6B3D2B,#A0522D,#C4783C);position:absolute;inset:0"></div>
+          <svg style="position:absolute;bottom:0;width:100%" viewBox="0 0 360 100" xmlns="http://www.w3.org/2000/svg"><rect x="20" y="60" width="40" height="40" fill="rgba(0,0,0,.3)"/><polygon points="20,60 40,30 60,60" fill="rgba(0,0,0,.3)"/><rect x="80" y="50" width="30" height="50" fill="rgba(0,0,0,.25)"/><polygon points="80,50 95,25 110,50" fill="rgba(0,0,0,.25)"/><rect x="160" y="55" width="50" height="45" fill="rgba(0,0,0,.2)"/><polygon points="155,55 185,20 215,55" fill="rgba(0,0,0,.2)"/></svg>
+          <div class="dest-img-overlay"></div>
+          <div class="dest-eco-dots"><div class="eco-dot"></div><div class="eco-dot"></div></div>
+          <div class="dest-img-label"><div class="dest-name">Luang Prabang</div><div class="dest-country">Laos</div></div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-meta"><div class="eco-bar-wrap"><div class="eco-bar-label"><span>Eco Score</span><span>82/100 · Grade B</span></div><div class="eco-bar-track"><div class="eco-bar-fill" style="width:82%"></div></div></div><div class="dest-price-block"><div class="dest-price-val">$890</div><div class="dest-price-note">5 nights incl.</div></div></div>
+          <div class="dest-tags"><span class="d-tag">Temple Walk</span><span class="d-tag">Mekong Boat</span><span class="d-tag">Night Market</span></div>
+          <div class="dest-footer"><div class="carbon-save">🌱 −140 kg CO₂</div><button class="btn-view">View trip</button></div>
+        </div>
+      </div>
+      <div class="dest-card" data-type="coastal">
+        <div class="dest-img-wrap">
+          <div class="dest-img-bg" style="background:linear-gradient(135deg,#006466,#0B525B,#1B7A8A);position:absolute;inset:0"></div>
+          <svg style="position:absolute;bottom:0;width:100%" viewBox="0 0 360 80" xmlns="http://www.w3.org/2000/svg"><path d="M0,60 Q90,20 180,55 Q270,85 360,40 L360,80 L0,80 Z" fill="rgba(0,0,0,.25)"/></svg>
+          <div class="dest-img-overlay"></div>
+          <div class="dest-eco-dots"><div class="eco-dot"></div><div class="eco-dot"></div></div>
+          <div class="dest-img-label"><div class="dest-name">Palawan Island</div><div class="dest-country">Philippines</div></div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-meta"><div class="eco-bar-wrap"><div class="eco-bar-label"><span>Eco Score</span><span>91/100 · Grade A</span></div><div class="eco-bar-track"><div class="eco-bar-fill" style="width:91%"></div></div></div><div class="dest-price-block"><div class="dest-price-val">$1,240</div><div class="dest-price-note">7 nights incl.</div></div></div>
+          <div class="dest-tags"><span class="d-tag">Coral Snorkel</span><span class="d-tag">Island Hop</span><span class="d-tag">Mangrove Tour</span></div>
+          <div class="dest-footer"><div class="carbon-save">🌱 −220 kg CO₂</div><button class="btn-view">View trip</button></div>
+        </div>
+      </div>
+      <div class="dest-card" data-type="forest">
+        <div class="dest-img-wrap">
+          <div class="dest-img-bg" style="background:linear-gradient(135deg,#1A3A1A,#2D5A2D,#3D7A3D);position:absolute;inset:0"></div>
+          <svg style="position:absolute;bottom:0;width:100%" viewBox="0 0 360 120" xmlns="http://www.w3.org/2000/svg"><polygon points="10,120 35,45 60,120" fill="rgba(0,0,0,.35)"/><polygon points="40,120 70,30 100,120" fill="rgba(0,0,0,.3)"/><polygon points="90,120 120,50 150,120" fill="rgba(0,0,0,.25)"/><polygon points="140,120 175,35 210,120" fill="rgba(0,0,0,.35)"/><polygon points="200,120 230,55 260,120" fill="rgba(0,0,0,.25)"/><polygon points="260,120 295,40 330,120" fill="rgba(0,0,0,.3)"/></svg>
+          <div class="dest-img-overlay"></div>
+          <div class="dest-eco-dots"><div class="eco-dot"></div><div class="eco-dot"></div></div>
+          <div class="dest-img-label"><div class="dest-name">Amazon Basin</div><div class="dest-country">Ecuador</div></div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-meta"><div class="eco-bar-wrap"><div class="eco-bar-label"><span>Eco Score</span><span>96/100 · Grade A</span></div><div class="eco-bar-track"><div class="eco-bar-fill" style="width:96%"></div></div></div><div class="dest-price-block"><div class="dest-price-val">$1,580</div><div class="dest-price-note">8 nights incl.</div></div></div>
+          <div class="dest-tags"><span class="d-tag">Jungle Lodge</span><span class="d-tag">Wildlife Guide</span><span class="d-tag">Kichwa-led</span></div>
+          <div class="dest-footer"><div class="carbon-save">🌱 −410 kg CO₂</div><button class="btn-view">View trip</button></div>
+        </div>
+      </div>
+      <div class="dest-card" data-type="mountain cultural">
+        <div class="dest-img-wrap">
+          <div class="dest-img-bg" style="background:linear-gradient(135deg,#3D2B1F,#7B4F3A,#A67C5B);position:absolute;inset:0"></div>
+          <svg style="position:absolute;bottom:0;width:100%" viewBox="0 0 360 120" xmlns="http://www.w3.org/2000/svg"><polygon points="0,120 100,20 180,70 260,10 360,50 360,120" fill="rgba(0,0,0,.3)"/></svg>
+          <div class="dest-img-overlay"></div>
+          <div class="dest-eco-dots"><div class="eco-dot"></div></div>
+          <div class="dest-img-label"><div class="dest-name">Bhutan Highlands</div><div class="dest-country">Kingdom of Bhutan</div></div>
+        </div>
+        <div class="dest-body">
+          <div class="dest-meta"><div class="eco-bar-wrap"><div class="eco-bar-label"><span>Eco Score</span><span>98/100 · Grade A</span></div><div class="eco-bar-track"><div class="eco-bar-fill" style="width:98%"></div></div></div><div class="dest-price-block"><div class="dest-price-val">$3,200</div><div class="dest-price-note">10 nights incl.</div></div></div>
+          <div class="dest-tags"><span class="d-tag">Tiger's Nest Trek</span><span class="d-tag">Dzong Monastery</span><span class="d-tag">Carbon Negative</span></div>
+          <div class="dest-footer"><div class="carbon-save">🌱 −520 kg CO₂</div><button class="btn-view">View trip</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ BOOKING ════════════ -->
+<div class="section-wrap" id="booking">
+  <div class="s-kicker">Booking</div>
+  <h2 class="s-title">Every booking, <em>eco-scored.</em></h2>
+  <p class="s-sub">Flights, stays, restaurants, and experiences — all with live eco-ratings so you can choose with confidence.</p>
+  <div class="booking-tabs-row">
+    <button class="b-tab active" onclick="switchTab(this,'flights')">✈️ Flights</button>
+    <button class="b-tab" onclick="switchTab(this,'stays')">🏡 Stays</button>
+    <button class="b-tab" onclick="switchTab(this,'restaurants')">🍽️ Restaurants</button>
+    <button class="b-tab" onclick="switchTab(this,'experiences')">🎒 Experiences</button>
+  </div>
+  <div class="b-panel active" id="tab-flights">
+    <div class="b-card"><div class="b-card-icon">✈️</div><div class="b-card-main"><div class="b-card-name">Air New Zealand · PER → AKL</div><div class="b-card-detail">Departs 08:10 · 9h 35m · Direct · Economy Stretch</div><div class="b-card-eco"><span class="mini-score score-a">A — 92 eco</span><div class="mini-bar-track"><div class="mini-bar-fill" style="width:92%"></div></div><span style="font-size:.64rem;color:var(--eco-green)">SAF blend + offset program</span></div></div><div class="b-card-right"><div class="b-price">$486</div><div class="b-price-note">per person</div><div class="b-carbon">🌱 −45 kg CO₂</div></div></div>
+    <div class="b-card"><div class="b-card-icon">✈️</div><div class="b-card-main"><div class="b-card-name">Qantas · PER → SYD → NAN (Fiji)</div><div class="b-card-detail">Departs 06:45 · 12h 20m · 1 stop · Economy</div><div class="b-card-eco"><span class="mini-score score-b">B — 74 eco</span><div class="mini-bar-track"><div class="mini-bar-fill" style="width:74%;background:var(--eco-amber)"></div></div><span style="font-size:.64rem;color:var(--eco-amber)">Carbon offset included</span></div></div><div class="b-card-right"><div class="b-price">$392</div><div class="b-price-note">per person</div><div class="b-carbon">🌱 −12 kg CO₂</div></div></div>
+    <div class="b-card"><div class="b-card-icon">🚂</div><div class="b-card-main"><div class="b-card-name">The Ghan Rail · Adelaide → Darwin</div><div class="b-card-detail">2 nights · Legendary journey · Gold Service</div><div class="b-card-eco"><span class="mini-score score-a">A — 97 eco</span><div class="mini-bar-track"><div class="mini-bar-fill" style="width:97%"></div></div><span style="font-size:.64rem;color:var(--eco-green)">95% lower emissions than flying</span></div></div><div class="b-card-right"><div class="b-price">$1,100</div><div class="b-price-note">per person</div><div class="b-carbon">🌱 −280 kg CO₂</div></div></div>
+  </div>
+  <div class="b-panel" id="tab-stays">
+    <div class="b-card"><div class="b-card-icon">🌿</div><div class="b-card-main"><div class="b-card-name">Daintree Eco Lodge &amp; Spa</div><div class="b-card-detail">Daintree, QLD · Rainforest villa · Breakfast included</div><div class="b-card-eco"><span class="mini-score score-a">A — 96 eco</span><div class="mini-bar-track"><div class="mini-bar-fill" style="width:96%"></div></div><span style="font-size:.64rem;color:var(--eco-green)">Solar, rainwater, organic farm</span></div></div><div class="b-card-right"><div class="b-price">$280</div><div class="b-price-note">/ night</div><div class="b-carbon">🌱 Carbon neutral</div></div></div>
+    <div class="b-card"><div class="b-card-icon">🏕️</div><div class="b-card-main"><div class="b-card-name">Basecamp Fiordland — Eco Glamping</div><div class="b-card-detail">Te Anau, NZ · Sustainable canvas tent · No-waste kitchen</div><div class="b-card-eco"><span class="mini-score score-a">A — 94 eco</span><div class="mini-bar-track"><div class="mini-bar-fill" style="width:94%"></div></div><span style="font-size:.64rem;color:var(--eco-green)">Leave No Trace certified</span></div></div><div class="b-card-right"><div class="b-price">$190</div><div class="b-price-note">/ night</div><div class="b-carbon">🌱 −60 kg CO₂</div></div></div>
+  </div>
+  <div class="b-panel" id="tab-restaurants">
+    <div class="b-card"><div class="b-card-icon">🌾</div><div class="b-card-main"><div class="b-card-name">Ferme de la Forêt — Farm-to-Table</div><div class="b-card-detail">Queenstown, NZ · Seasonal tasting menu · Organic wine</div><div class="b-card-eco"><span class="mini-score score-a">A — 93 eco</span><div class="mini-bar-track"><div class="mini-bar-fill" style="width:93%"></div></div><span style="font-size:.64rem;color:var(--eco-green)">100% local sourcing, zero food waste</span></div></div><div class="b-card-right"><div class="b-price">$85</div><div class="b-price-note">/ person</div><div class="b-carbon">🌱 Low carbon meal</div></div></div>
+    <div class="b-card"><div class="b-card-icon">🐟</div><div class="b-card-main"><div class="b-card-name">The Harbour Table — Sustainable Catch</div><div class="b-card-detail">Napier, NZ · Daily catch · MSC certified seafood</div><div class="b-card-eco"><span class="mini-score score-b">B — 82 eco</span><div class="mini-bar-track"><div class="mini-bar-fill" style="width:82%"></div></div><span style="font-size:.64rem;color:var(--eco-green)">Sustainable fishing practices</span></div></div><div class="b-card-right"><div class="b-price">$55</div><div class="b-price-note">/ person</div><div class="b-carbon">🌱 −8 kg CO₂</div></div></div>
+  </div>
+  <div class="b-panel" id="tab-experiences">
+    <div class="b-card"><div class="b-card-icon">🛶</div><div class="b-card-main"><div class="b-card-name">Milford Sound Kayak — Dawn Tour</div><div class="b-card-detail">Fiordland, NZ · 4 hrs · Small group (6 max) · No-engine</div><div class="b-card-eco"><span class="mini-score score-a">A — 99 eco</span><div class="mini-bar-track"><div class="mini-bar-fill" style="width:99%"></div></div><span style="font-size:.64rem;color:var(--eco-green)">Zero-emission, DOC approved guide</span></div></div><div class="b-card-right"><div class="b-price">$149</div><div class="b-price-note">/ person</div><div class="b-carbon">🌱 Pure zero-carbon</div></div></div>
+    <div class="b-card"><div class="b-card-icon">🌿</div><div class="b-card-main"><div class="b-card-name">Kichwa Amazon Walk — Indigenous Guide</div><div class="b-card-detail">Napo Province, Ecuador · Full day · Cultural immersion</div><div class="b-card-eco"><span class="mini-score score-a">A — 97 eco</span><div class="mini-bar-track"><div class="mini-bar-fill" style="width:97%"></div></div><span style="font-size:.64rem;color:var(--eco-green)">Community-owned, rainforest preservation</span></div></div><div class="b-card-right"><div class="b-price">$68</div><div class="b-price-note">/ person</div><div class="b-carbon">🌱 −380 kg CO₂/yr</div></div></div>
+  </div>
+</div>
+
+<!-- ════════════ REWARDS ════════════ -->
+<div class="rewards-bg" id="rewards">
+  <div class="rewards-inner">
+    <div class="s-kicker">Rewards Program</div>
+    <h2 class="s-title">Earn while you <em>roam</em> responsibly.</h2>
+    <p class="s-sub">Every eco-friendly choice earns EcoWander Points. Redeem for discounts, plant trees, or unlock exclusive member perks.</p>
+    <div class="rewards-grid">
+      <div>
+        <div style="font-size:.72rem;font-weight:600;color:var(--ink-light);margin-bottom:.9rem;text-transform:uppercase;letter-spacing:.06em">Member Tiers</div>
+        <div class="tier-stack">
+          <div class="tier-card t-seed"><div class="tier-badge badge-seed">🌱</div><div><div class="tier-name">Seed</div><div class="tier-pts">0 – 999 points</div></div><div class="tier-perks"><div class="tier-perk">5% booking discount</div><div class="tier-perk">Eco newsletter</div></div></div>
+          <div class="tier-card t-sprout"><div class="tier-badge badge-sprout">🌿</div><div><div class="tier-name">Sprout</div><div class="tier-pts">1,000 – 4,999 points</div></div><div class="tier-perks"><div class="tier-perk">10% discount</div><div class="tier-perk">Priority support</div></div></div>
+          <div class="tier-card t-canopy"><div class="tier-badge badge-canopy">🌳</div><div><div class="tier-name">Canopy</div><div class="tier-pts">5,000 – 14,999 points</div></div><div class="tier-perks"><div class="tier-perk">15% discount</div><div class="tier-perk">Exclusive eco experiences</div></div></div>
+          <div class="tier-card t-legend"><div class="tier-badge badge-legend">🏆</div><div><div class="tier-name" style="color:var(--gold-light)">Legend</div><div class="tier-pts">15,000+ points</div></div><div class="tier-perks"><div class="tier-perk">20% + tree planting</div><div class="tier-perk">Conservation trip access</div></div></div>
+        </div>
+      </div>
+      <div class="points-panel">
+        <div style="font-size:.71rem;color:var(--ink-light);margin-bottom:3px">Your balance</div>
+        <div class="pts-balance-row">
+          <div class="pts-big">2,840</div>
+          <div class="pts-label">EcoWander Points<br><span class="pts-tier-label">Sprout tier 🌿</span></div>
+        </div>
+        <div style="font-size:.68rem;color:var(--ink-light);margin-top:.45rem;margin-bottom:3px">Progress to Canopy</div>
+        <div class="progress-bar-track"><div class="progress-bar-fill"></div></div>
+        <div class="progress-labels"><span>2,840 pts</span><span>2,160 pts to go</span></div>
+        <div class="earn-section">
+          <div class="earn-section-title">Ways to earn points</div>
+          <div class="earn-item"><div class="earn-icon">✈️</div><div><div class="earn-name">Eco-friendly flight booking</div><div class="earn-desc">Score A or B flight option selected</div></div><div class="earn-pts">+200</div></div>
+          <div class="earn-item"><div class="earn-icon">🏡</div><div><div class="earn-name">Green accommodation</div><div class="earn-desc">Stay at a certified eco lodge</div></div><div class="earn-pts">+150</div></div>
+          <div class="earn-item"><div class="earn-icon">⭐</div><div><div class="earn-name">Write a review</div><div class="earn-desc">Share your eco experience</div></div><div class="earn-pts">+50</div></div>
+          <div class="earn-item"><div class="earn-icon">🌱</div><div><div class="earn-name">Low-carbon itinerary</div><div class="earn-desc">Per 100kg CO₂ saved vs. average</div></div><div class="earn-pts">+100</div></div>
+          <div class="earn-item"><div class="earn-icon">🤝</div><div><div class="earn-name">Community-owned bookings</div><div class="earn-desc">Support local operators</div></div><div class="earn-pts">+80</div></div>
+        </div>
+        <div class="pts-actions">
+          <button class="btn-primary" style="flex:1;justify-content:center;font-size:.83rem;padding:.7rem 1rem">Redeem points</button>
+          <button class="btn-secondary" style="font-size:.83rem;padding:.7rem 1rem">View history</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════ FOOTER ════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">EcoWander</div>
+        <p class="footer-tagline">Adventure without compromise. Travel that gives back more than it takes.</p>
+        <div class="footer-socials">
+          <div class="social-btn">𝕏</div>
+          <div class="social-btn">in</div>
+          <div class="social-btn">◑</div>
+        </div>
+      </div>
+      <div><div class="footer-col-title">Explore</div><ul class="footer-links"><li><a href="#">Destinations</a></li><li><a href="#">Adventure Types</a></li><li><a href="#">Eco Ratings</a></li><li><a href="#">Trip Builder</a></li><li><a href="#">Carbon Calculator</a></li></ul></div>
+      <div><div class="footer-col-title">Company</div><ul class="footer-links"><li><a href="#">About Us</a></li><li><a href="#">Our Mission</a></li><li><a href="#">B Corp Status</a></li><li><a href="#">Impact Report</a></li><li><a href="#">Careers</a></li></ul></div>
+      <div><div class="footer-col-title">Support</div><ul class="footer-links"><li><a href="#">Help Centre</a></li><li><a href="#">Partner With Us</a></li><li><a href="#">Eco Certification</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Use</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 EcoWander. All rights reserved.</div>
+      <div class="footer-pledge"><span>🌱</span> EcoWander is carbon-negative. We offset 3× our operational emissions annually.</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════ CHATBOT ════════════ -->
+<button class="chat-fab" id="chatFab" onclick="toggleChat()" title="Ask EcoWander AI">
+  <span id="fabIcon">🌿</span>
+  <div class="chat-fab-badge"></div>
+</button>
+
+<div class="chat-window" id="chatWindow">
+  <div class="chat-header">
+    <div class="chat-avatar">🌿</div>
+    <div class="chat-header-info">
+      <div class="chat-header-name">EcoWander AI</div>
+      <div class="chat-header-status"><div class="status-dot"></div>Online · Eco travel expert</div>
+    </div>
+    <button class="chat-close-btn" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="chat-messages" id="chatMsgs">
+    <div class="chat-msg">
+      <div class="msg-avatar">🌿</div>
+      <div class="msg-bubble">Hi! I'm your EcoWander guide 👋 Ask me about trip ideas, eco-ratings, destination reviews, carbon savings, or anything about sustainable travel.</div>
+    </div>
+  </div>
+  <div class="chat-quick" id="quickBtns">
+    <button class="quick-btn" onclick="quickSend('What are the top eco destinations right now?')">🌍 Top eco spots</button>
+    <button class="quick-btn" onclick="quickSend('How does the eco rating system work?')">🌿 Eco ratings?</button>
+    <button class="quick-btn" onclick="quickSend('Summarise reviews for Daintree Rainforest')">⭐ Daintree reviews</button>
+    <button class="quick-btn" onclick="quickSend('What carbon savings can I expect visiting New Zealand?')">♻️ Carbon savings</button>
+    <button class="quick-btn" onclick="quickSend('Best eco lodges for families?')">🏡 Family lodges</button>
+  </div>
+  <div class="chat-input-row">
+    <input class="chat-input" type="text" id="chatIn" placeholder="Ask anything about eco travel…" onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="chat-send-btn" onclick="sendChat()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- ════════════ SCRIPTS ════════════ -->
+<script>
+/* ── DROPDOWN SYSTEM ── */
+function toggleDP(panelId, overlayId, e) {
+  if (e) e.stopPropagation();
+  const panel = document.getElementById(panelId);
+  const overlay = document.getElementById(overlayId);
+  const isOpen = panel.style.display !== 'none';
+  closeAllDP();
+  if (!isOpen) { panel.style.display = 'block'; overlay.classList.add('open'); }
+}
+function closeAllDP() {
+  ['regionPanel','settingsPanel','acctPanel'].forEach(id => { const el=document.getElementById(id); if(el) el.style.display='none'; });
+  ['regionOverlay','settingsOverlay','acctOverlay'].forEach(id => { const el=document.getElementById(id); if(el) el.classList.remove('open'); });
+}
+function setRegion(el, flag, currency, name) {
+  document.querySelectorAll('#regionPanel .dp-option').forEach(o => o.classList.remove('sel'));
+  el.classList.add('sel');
+  document.getElementById('regionLabel').textContent = flag + ' ' + currency;
+  closeAllDP();
+}
+
+/* ── AUTH ── */
+function openAuth(tab) { document.getElementById('authModal').classList.add('open'); switchAuth(tab); }
+function closeAuth() { document.getElementById('authModal').classList.remove('open'); }
+function handleBackdropClick(e) { if (e.target === document.getElementById('authModal')) closeAuth(); }
+function switchAuth(tab) {
+  const isLogin = tab === 'login';
+  document.getElementById('tabLogin').classList.toggle('active', isLogin);
+  document.getElementById('tabSignup').classList.toggle('active', !isLogin);
+  document.getElementById('loginForm').style.display = isLogin ? 'block' : 'none';
+  document.getElementById('signupForm').style.display = isLogin ? 'none' : 'block';
+  document.getElementById('authTitle').textContent = isLogin ? 'Welcome back' : 'Join EcoWander';
+  document.getElementById('authSub').textContent = isLogin ? 'Log in to access your eco-trips and rewards.' : 'Create a free account and start earning eco-rewards.';
+}
+function doLogin() {
+  closeAuth();
+  document.getElementById('authOut').style.display = 'none';
+  const avatar = document.getElementById('authIn');
+  avatar.style.display = 'flex';
+  document.getElementById('navPts').style.display = 'flex';
+}
+function doLogout() {
+  closeAllDP();
+  document.getElementById('authOut').style.display = 'flex';
+  document.getElementById('authIn').style.display = 'none';
+  document.getElementById('navPts').style.display = 'none';
+}
+
+/* ── HERO SEARCH ── */
+let currentTab = 'all';
+function setSearchTab(btn, tab) {
+  document.querySelectorAll('.s-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  currentTab = tab;
+  const tripRow = document.getElementById('tripTypeRow');
+  tripRow.style.display = (tab === 'flights' || tab === 'all') ? 'flex' : 'none';
+
+  const card = document.getElementById('searchCard');
+  const btn_el = card.querySelector('.s-search-btn');
+  const btnHTML = btn_el.outerHTML;
+
+  const configs = {
+    all: `<div class="s-field" style="flex:2"><span class="s-field-label">Where to?</span><input type="text" id="mainSearch" placeholder="Places, eco-stays, things to do…"></div><div class="s-field" id="sfCheckin"><span class="s-field-label">Check in</span><input type="date" id="checkinDate"></div><div class="s-field" id="sfCheckout"><span class="s-field-label">Check out</span><input type="date" id="checkoutDate"></div><div class="s-field" style="min-width:110px"><span class="s-field-label">Guests</span><select><option>1 guest</option><option>2 guests</option><option>3 guests</option><option>4+ guests</option></select></div>`,
+    hotels: `<div class="s-field" style="flex:2"><span class="s-field-label">Destination</span><input type="text" id="mainSearch" placeholder="City, region, or 'surprise me'…"></div><div class="s-field"><span class="s-field-label">Check in</span><input type="date"></div><div class="s-field"><span class="s-field-label">Check out</span><input type="date"></div><div class="s-field" style="min-width:110px"><span class="s-field-label">Guests</span><select><option>1 guest</option><option>2 guests</option><option>3+ guests</option></select></div>`,
+    things: `<div class="s-field" style="flex:2"><span class="s-field-label">What do you want to do?</span><input type="text" id="mainSearch" placeholder="Kayaking, night markets, guided treks…"></div><div class="s-field"><span class="s-field-label">Where</span><input type="text" placeholder="Any destination"></div><div class="s-field"><span class="s-field-label">Date</span><input type="date"></div>`,
+    restaurants: `<div class="s-field" style="flex:2"><span class="s-field-label">Cuisine or name</span><input type="text" id="mainSearch" placeholder="Farm-to-table, vegan, local catch…"></div><div class="s-field"><span class="s-field-label">Location</span><input type="text" placeholder="City or area"></div><div class="s-field" style="min-width:120px"><span class="s-field-label">Diners</span><select><option>1 person</option><option>2 people</option><option>3–5 people</option><option>6+ people</option></select></div>`,
+    flights: `<div class="s-field"><span class="s-field-label">From</span><input type="text" id="mainSearch" placeholder="Origin city or airport"></div><div class="s-field"><span class="s-field-label">To</span><input type="text" placeholder="Destination"></div><div class="s-field"><span class="s-field-label">Departure</span><input type="date"></div><div class="s-field" id="returnDateFieldHero"><span class="s-field-label">Return</span><input type="date"></div><div class="s-field" style="min-width:100px"><span class="s-field-label">Class</span><select><option>Economy</option><option>Premium</option><option>Business</option></select></div>`
+  };
+  card.innerHTML = (configs[tab] || configs.all) + btnHTML;
+  card.querySelector('.s-search-btn').onclick = handleSearch;
+  const inp = document.getElementById('mainSearch');
+  if (inp) inp.addEventListener('keydown', e => { if (e.key === 'Enter') handleSearch(); });
+}
+
+let tripTypeHero = 'return';
+function setTripType(type) {
+  tripTypeHero = type;
+  document.getElementById('ttReturn').classList.toggle('on', type === 'return');
+  document.getElementById('ttOneWay').classList.toggle('on', type === 'oneway');
+  if (currentTab === 'flights') {
+    const rField = document.getElementById('returnDateFieldHero');
+    if (rField) { rField.style.opacity = type === 'return' ? '1' : '.35'; rField.querySelector('input').disabled = type !== 'return'; }
+  }
+}
+function handleSearch() { document.getElementById('discover').scrollIntoView({behavior:'smooth'}); }
+
+/* ── PLANNER ── */
+let curStep = 0;
+const STEPS = 4;
+function goStep(n) {
+  document.querySelectorAll('.planner-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('ps' + n).classList.add('active');
+  curStep = n;
+  document.querySelectorAll('.step-bar').forEach((b, i) => {
+    b.classList.remove('active','done');
+    if (i === n) b.classList.add('active');
+    else if (i < n) b.classList.add('done');
+  });
+}
+function nextStep() { if (curStep < STEPS - 1) goStep(curStep + 1); }
+function prevStep() { if (curStep > 0) goStep(curStep - 1); }
+function pickVibe(card) { document.querySelectorAll('.vibe-card').forEach(c => c.classList.remove('sel')); card.classList.add('sel'); }
+
+let planTripType = 'return';
+function setPlanTripType(type) {
+  planTripType = type;
+  document.getElementById('pttReturn').classList.toggle('on', type === 'return');
+  document.getElementById('pttOneWay').classList.toggle('on', type === 'oneway');
+  const rw = document.getElementById('returnDateWrap');
+  if (rw) { rw.style.opacity = type === 'return' ? '1' : '.38'; rw.querySelector('input').disabled = type !== 'return'; }
+}
+function swapFromTo() {
+  const f = document.getElementById('pFrom'), t = document.getElementById('pTo');
+  if (f && t) { const tmp = f.value; f.value = t.value; t.value = tmp; }
+}
+
+function generatePlan() {
+  document.querySelectorAll('.planner-step').forEach(s => s.style.display = 'none');
+  document.getElementById('stepBars').style.display = 'none';
+  document.getElementById('aiResult').classList.add('show');
+  const typing = document.getElementById('aiTyping');
+  const msgs = ['Scanning 48,000+ eco-rated destinations…','Matching your vibe to low-carbon routes…','Calculating carbon savings…','Optimising local community impact…','Building your personalised plan…'];
+  let i = 0;
+  const iv = setInterval(() => { typing.textContent = msgs[i++ % msgs.length]; }, 900);
+  setTimeout(() => { clearInterval(iv); typing.textContent = 'Your perfect green adventure is ready! ✓'; document.getElementById('resultContent').style.display = 'block'; }, 4500);
+}
+function resetPlanner() {
+  curStep = 0;
+  document.querySelectorAll('.planner-step').forEach(s => { s.style.display = ''; s.classList.remove('active'); });
+  document.getElementById('ps0').classList.add('active');
+  document.getElementById('stepBars').style.display = 'flex';
+  document.getElementById('aiResult').classList.remove('show');
+  document.getElementById('resultContent').style.display = 'none';
+  goStep(0);
+}
+
+/* ── FILTER ── */
+function setFilter(btn, type) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.dest-card').forEach(card => {
+    const ct = card.dataset.type || '';
+    if (type === 'all') { card.style.display = ''; }
+    else if (type === 'budget') {
+      const p = parseInt((card.querySelector('.dest-price-val')||{}).textContent||'0', 10);
+      card.style.display = p < 1000 ? '' : 'none';
+    } else if (type === 'grade-a') {
+      const s = card.querySelector('.eco-bar-label span:last-child');
+      card.style.display = s && s.textContent.includes('Grade A') ? '' : 'none';
+    } else { card.style.display = ct.includes(type) ? '' : 'none'; }
+  });
+}
+
+/* ── BOOKING TABS ── */
+function switchTab(btn, id) {
+  document.querySelectorAll('.b-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.b-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+}
+
+/* ── ECO BAR ANIMATION ── */
+const barObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.style.width = e.target.dataset.w; });
+}, {threshold: .3});
+setTimeout(() => {
+  document.querySelectorAll('.eco-bar-fill').forEach(bar => {
+    bar.dataset.w = bar.style.width;
+    bar.style.width = '0';
+    bar.style.transition = 'width 1s ease';
+    barObs.observe(bar);
+  });
+}, 150);
+
+/* ── CHATBOT ── */
+let chatOpen = false;
+const botDB = {
+  'eco rating': 'Our eco-rating scores each option across 6 dimensions: carbon footprint, biodiversity impact, water use, community benefit, waste practices, and local economic contribution — combined into an A–D grade. 🌿',
+  'daintree': '⭐ Daintree Rainforest review summary:\n\n"Breathtaking — the oldest tropical rainforest on Earth." — Jake, 5★\n"Guides are incredibly knowledgeable about indigenous culture." — Priya, 5★\n"Very well managed and genuinely low-impact." — Sam, 4★\n\nOverall 4.8/5 · Eco Score 94/100 · Grade A 🌿',
+  'carbon': 'On a typical 9-day NZ trip, EcoWander users save 480–720 kg CO₂ vs. conventional travel — equivalent to planting 12–18 trees. This is achieved through SAF flights, eco-lodges, and low-emission activities. ♻️',
+  'family': '🏡 Top eco lodges for families:\n1. Daintree Eco Lodge, AU (96 eco)\n2. Basecamp Fiordland, NZ (94 eco)\n3. Treehouses of Borneo, MY (91 eco)\n4. Inkaterra Guides, Peru (93 eco)\n\nAll offer kid-friendly programmes and zero-waste kitchens!',
+  'top eco': '🌍 Top eco destinations right now:\n1. Bhutan — carbon negative country 🇧🇹\n2. Daintree, Australia — oldest rainforest 🇦🇺\n3. Palawan, Philippines — coral sanctuary 🇵🇭\n4. Amazon, Ecuador — Kichwa-led tours 🇪🇨\n5. Lofoten, Norway — clean energy haven 🇳🇴',
+  'review': 'I can summarise reviews for any destination! Try asking about Daintree, Bhutan, Palawan, Lofoten, or the Amazon. Which one interests you? ⭐',
+  'default': 'I\'d love to help with that! Ask me about eco-ratings, destination reviews, carbon savings, sustainable lodges, itinerary ideas, or anything about green travel. 🌱'
+};
+
+function toggleChat() {
+  chatOpen = !chatOpen;
+  document.getElementById('chatWindow').classList.toggle('open', chatOpen);
+  document.getElementById('fabIcon').textContent = chatOpen ? '✕' : '🌿';
+  if (chatOpen) setTimeout(() => document.getElementById('chatIn').focus(), 300);
+}
+function addMsg(text, from) {
+  const msgs = document.getElementById('chatMsgs');
+  const isBot = from === 'bot';
+  const d = document.createElement('div');
+  d.className = 'chat-msg' + (isBot ? '' : ' user');
+  d.innerHTML = `<div class="msg-avatar">${isBot ? '🌿' : 'AJ'}</div><div class="msg-bubble">${text.replace(/\n/g,'<br>')}</div>`;
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+function showTyping() {
+  const msgs = document.getElementById('chatMsgs');
+  const d = document.createElement('div');
+  d.className = 'chat-msg'; d.id = 'typingEl';
+  d.innerHTML = `<div class="msg-avatar">🌿</div><div class="msg-bubble"><div class="typing-ind"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div>`;
+  msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight;
+}
+function removeTyping() { const t = document.getElementById('typingEl'); if (t) t.remove(); }
+function respond(text) {
+  const key = Object.keys(botDB).find(k => text.toLowerCase().includes(k));
+  showTyping();
+  setTimeout(() => { removeTyping(); addMsg(botDB[key] || botDB['default'], 'bot'); }, 1500);
+}
+function quickSend(text) {
+  document.getElementById('quickBtns').style.display = 'none';
+  addMsg(text, 'user'); respond(text);
+}
+function sendChat() {
+  const input = document.getElementById('chatIn');
+  const text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+  document.getElementById('quickBtns').style.display = 'none';
+  addMsg(text, 'user'); respond(text);
+}
+</script>
+</body>
+</html>
