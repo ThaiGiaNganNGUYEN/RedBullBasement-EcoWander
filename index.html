@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>EcoWander — Adventure Without Guilt</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -677,13 +677,14 @@ nav{
   background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.11);
   border-radius:var(--r);padding:1.1rem;margin-bottom:.85rem;
 }
-.result-card-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.9rem;}
+.result-card-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.9rem;flex-wrap:wrap;gap:.65rem;}
 .result-trip-name{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;color:#fff;}
 .result-trip-sub{font-size:.71rem;color:rgba(255,255,255,.38);margin-top:2px;}
 .eco-pill{
   background:rgba(64,145,108,.2);border:1px solid rgba(82,183,136,.28);
   border-radius:100px;padding:3px 10px;
   font-size:.71rem;font-weight:600;color:var(--leaf-light);white-space:nowrap;
+  flex-shrink:0;
 }
 .result-items{display:flex;flex-direction:column;gap:7px;}
 .r-item{display:flex;align-items:center;gap:9px;font-size:.79rem;color:rgba(255,255,255,.55);}
@@ -935,6 +936,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.45);padding:3.5rem 2.5rem 1
   background:var(--leaf);padding:.9rem 1.1rem;
   display:flex;align-items:center;gap:9px;
 }
+.chat-header-info{flex:1;min-width:0;}
 .chat-avatar{
   width:34px;height:34px;border-radius:50%;
   background:rgba(255,255,255,.2);
@@ -1017,22 +1019,207 @@ footer{background:var(--ink);color:rgba(255,255,255,.45);padding:3.5rem 2.5rem 1
 .chat-send-btn:hover{background:var(--eco-green);transform:scale(1.05);}
 
 /* ── RESPONSIVE ──────────────────────────────── */
+.nav-ai-short{display:none;}
+.nav-login-short{display:none;}
+
 @media(max-width:900px){
-  nav{padding:0 1.2rem;}
-  .nav-center{display:none;}
-  .hero{padding:6.5rem 1.3rem 2.5rem;}
-  .search-card{flex-wrap:wrap;}
-  .s-field{border-right:none;border-bottom:1.5px solid rgba(45,106,79,.08);min-width:calc(50% - 6px);}
-  .s-field:last-of-type{border-bottom:none;}
-  .planner-inner{grid-template-columns:1fr;gap:2rem;}
-  .planner-section{padding:4rem 1.3rem;}
-  .section-wrap{padding:4rem 1.3rem;}
+  nav{
+    flex-wrap:wrap;
+    row-gap:.35rem;
+    align-items:center;
+    height:auto;
+    min-height:58px;
+    padding:max(.45rem, env(safe-area-inset-top, 0px)) max(1rem, env(safe-area-inset-right, 0px)) .5rem max(1rem, env(safe-area-inset-left, 0px));
+  }
+  .nav-left{flex:1;min-width:0;gap:6px;}
+  .nav-logo{font-size:1.12rem;}
+  .nav-right{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+    align-items:center;
+    gap:5px;
+    max-width:100%;
+  }
+  .nav-center{
+    display:flex;
+    order:3;
+    flex:1 1 100%;
+    justify-content:flex-start;
+    gap:1.15rem;
+    padding:.4rem 0 .2rem;
+    margin:.1rem -1rem 0;
+    padding-left:max(1rem, env(safe-area-inset-left, 0px));
+    padding-right:max(1rem, env(safe-area-inset-right, 0px));
+    border-top:1px solid rgba(45,106,79,.12);
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    list-style:none;
+  }
+  .nav-center::-webkit-scrollbar{display:none;}
+  .nav-center li{flex-shrink:0;}
+  .nav-center a{font-size:.78rem;}
+
+  .nav-ai-short{display:inline;}
+  .nav-ai-long{display:none;}
+
+  .hero{
+    padding:clamp(5.25rem, 20vw, 6.5rem) max(1.1rem, env(safe-area-inset-left, 0px)) 2.2rem max(1.1rem, env(safe-area-inset-right, 0px));
+    min-height:auto;
+  }
+  .hero h1{font-size:clamp(2.25rem, 10.5vw, 3.75rem);line-height:1.02;}
+  .hero-sub{font-size:.95rem;max-width:100%;padding:0 .15rem;}
+  .hero-stats{gap:1.35rem;row-gap:1rem;}
+
+  .search-widget{width:100%;max-width:100%;}
+
+  .search-tab-row{
+    justify-content:flex-start;
+    overflow-x:auto;
+    flex-wrap:nowrap;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;
+    gap:6px;
+    margin-bottom:10px;
+    margin-left:-1.1rem;
+    margin-right:-1.1rem;
+    padding:0 max(1.1rem, env(safe-area-inset-left, 0px)) 6px max(1.1rem, env(safe-area-inset-right, 0px));
+  }
+  .s-tab{flex-shrink:0;padding:7px 13px;font-size:.74rem;}
+
+  .trip-type-row{flex-wrap:wrap;justify-content:center;gap:6px;}
+  .tt-btn{font-size:.72rem;padding:6px 12px;}
+
+  .search-card{
+    flex-direction:column;
+    align-items:stretch;
+    padding:8px;
+    gap:0;
+  }
+  .s-field{
+    border-right:none;
+    border-bottom:1px solid rgba(45,106,79,.1);
+    min-width:100%;
+    width:100%;
+    padding:10px 12px;
+  }
+  .s-field:last-of-type{border-bottom:1px solid rgba(45,106,79,.1);}
+  .s-search-btn{
+    width:100%;
+    justify-content:center;
+    padding:.78rem 1rem;
+    margin-top:4px;
+    border-radius:var(--r);
+  }
+
+  .hero-chips{
+    margin-left:-1.1rem;
+    margin-right:-1.1rem;
+    padding-left:max(1.1rem, env(safe-area-inset-left, 0px));
+    padding-right:max(1.1rem, env(safe-area-inset-right, 0px));
+  }
+  .dest-chip{width:128px;}
+
+  .planner-inner{grid-template-columns:1fr;gap:1.85rem;}
+  .planner-section{padding:3.5rem max(1.1rem, env(safe-area-inset-left, 0px)) 3.5rem max(1.1rem, env(safe-area-inset-right, 0px));}
+  .planner-form{padding:1.35rem;}
+  .vibe-grid{grid-template-columns:1fr;gap:8px;}
+  .step-bars{gap:5px;}
+
+  .section-wrap{padding:3.5rem max(1.1rem, env(safe-area-inset-left, 0px)) 3.5rem max(1.1rem, env(safe-area-inset-right, 0px));}
+  .destinations-inner{padding:0 max(1.1rem, env(safe-area-inset-left, 0px)) 0 max(1.1rem, env(safe-area-inset-right, 0px));}
+  .destinations-bg{padding:3.5rem 0;}
+  .rewards-inner{padding:0 max(1.1rem, env(safe-area-inset-left, 0px)) 0 max(1.1rem, env(safe-area-inset-right, 0px));}
+  .rewards-bg{padding:3.5rem 0;}
+
   .dest-grid{grid-template-columns:1fr;}
-  .eco-explainer{grid-template-columns:1fr;gap:2rem;}
-  .rewards-grid{grid-template-columns:1fr;gap:2rem;}
-  .footer-top{grid-template-columns:1fr 1fr;}
-  .chat-window{width:calc(100vw - 2rem);right:1rem;bottom:88px;}
-  .chat-fab{bottom:18px;right:18px;}
+  .eco-explainer{grid-template-columns:1fr;gap:1.75rem;}
+  .rewards-grid{grid-template-columns:1fr;gap:1.75rem;}
+
+  .booking-tabs-row{
+    max-width:100%;
+    width:100%;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;
+    padding:4px 6px;
+  }
+  .b-tab{flex-shrink:0;padding:7px 13px;font-size:.76rem;}
+
+  .modal-box{
+    max-width:min(400px, calc(100vw - 1.25rem - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px)));
+    margin:.6rem;
+    padding:1.6rem 1.2rem;
+  }
+
+  #regionPanel,
+  #settingsPanel,
+  #acctPanel{
+    left:max(.75rem, env(safe-area-inset-left, 0px)) !important;
+    right:max(.75rem, env(safe-area-inset-right, 0px)) !important;
+    top:6.85rem !important;
+    width:auto !important;
+    min-width:0 !important;
+    max-height:min(72vh, 520px);
+    overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .footer-top{grid-template-columns:1fr 1fr;gap:1.35rem;}
+  footer{padding:2.35rem max(1.1rem, env(safe-area-inset-left, 0px)) 1.45rem max(1.1rem, env(safe-area-inset-right, 0px));}
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:.65rem;}
+
+  .chat-window{
+    width:calc(100vw - 1.25rem - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));
+    max-width:100%;
+    right:max(.6rem, env(safe-area-inset-right, 0px));
+    left:auto;
+    bottom:calc(88px + env(safe-area-inset-bottom, 0px));
+  }
+  .chat-fab{
+    bottom:max(16px, env(safe-area-inset-bottom, 0px));
+    right:max(16px, env(safe-area-inset-right, 0px));
+    width:52px;height:52px;
+  }
+  .msg-bubble{max-width:min(230px, calc(100vw - 5.5rem));}
+}
+
+@media(max-width:600px){
+  .grade-card{flex-wrap:wrap;}
+  .grade-co2{
+    margin-left:0;width:100%;text-align:left;
+    padding-top:.55rem;margin-top:.35rem;
+    border-top:1px solid var(--sand-dark);
+  }
+  .b-card{flex-direction:column;align-items:flex-start;gap:.95rem;}
+  .b-card-right{align-self:stretch;text-align:left;width:100%;}
+  .b-card-eco{flex-wrap:wrap;}
+  .r-item{flex-wrap:wrap;word-break:break-word;}
+  .dest-meta{flex-direction:column;align-items:stretch;gap:.55rem;}
+  .dest-price-block{text-align:left;}
+  .eco-bar-wrap{margin-right:0;}
+  .result-co2{flex-direction:column;align-items:flex-start;gap:.75rem;}
+  .result-co2 > div:last-child{text-align:left !important;width:100%;}
+  .result-pts-row{flex-direction:column;align-items:flex-start;gap:.35rem;}
+  .footer-top{grid-template-columns:1fr;}
+  .step-nav{flex-direction:column;gap:.5rem;align-items:stretch;}
+  .step-nav .btn-next,.step-nav .btn-back{width:100%;justify-content:center;}
+  .f-row2{grid-template-columns:1fr;}
+  .trip-type-row-dark{flex-wrap:wrap;}
+  .tier-card{flex-wrap:wrap;}
+  .tier-perks{margin-left:0;width:100%;text-align:left;padding-top:.35rem;}
+}
+
+@media(max-width:420px){
+  .hero h1{font-size:clamp(2rem, 11vw, 2.65rem);}
+  .nav-region-btn .nav-chevron{display:none;}
+  .nav-login-long{display:none;}
+  .nav-login-short{display:inline;}
+  .nav-signup-btn{padding:6px 12px;font-size:.74rem;}
+  .nav-login-btn{padding:5px 11px;font-size:.74rem;}
+  .nav-points{font-size:.68rem;padding:5px 8px;}
 }
 </style>
 </head>
@@ -1045,8 +1232,8 @@ footer{background:var(--ink);color:rgba(255,255,255,.45);padding:3.5rem 2.5rem 1
       <div class="logo-leaf"></div>
       EcoWander
     </a>
-    <button class="nav-ai-btn" onclick="document.getElementById('plan').scrollIntoView({behavior:'smooth'})">
-      ✦ Plan my trip
+    <button type="button" class="nav-ai-btn" aria-label="Plan my trip" onclick="document.getElementById('plan').scrollIntoView({behavior:'smooth'})">
+      <span class="nav-ai-long">✦ Plan my trip</span><span class="nav-ai-short" aria-hidden="true">✦ Plan</span>
     </button>
   </div>
 
@@ -1068,7 +1255,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.45);padding:3.5rem 2.5rem 1
     <button class="nav-region-btn" onclick="toggleDP('regionPanel','regionOverlay',event)">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
       <span id="regionLabel">🇦🇺 AUD</span>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:9px;height:9px;opacity:.4"><path d="M6 9l6 6 6-6"/></svg>
+      <svg class="nav-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:9px;height:9px;opacity:.4"><path d="M6 9l6 6 6-6"/></svg>
     </button>
 
     <!-- Settings -->
@@ -1078,8 +1265,8 @@ footer{background:var(--ink);color:rgba(255,255,255,.45);padding:3.5rem 2.5rem 1
 
     <!-- Auth logged out -->
     <div id="authOut" style="display:flex;gap:6px;align-items:center;">
-      <button class="nav-login-btn" onclick="openAuth('login')">Log in</button>
-      <button class="nav-signup-btn" onclick="openAuth('signup')">Sign up</button>
+      <button type="button" class="nav-login-btn" onclick="openAuth('login')"><span class="nav-login-long">Log in</span><span class="nav-login-short">Login</span></button>
+      <button type="button" class="nav-signup-btn" onclick="openAuth('signup')">Sign up</button>
     </div>
 
     <!-- Auth logged in -->
